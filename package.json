@@ -1,0 +1,17 @@
+{
+    "name": "Disko",
+    "version": "0.0.0",
+    "dependencies": { 
+      "express": "*",
+      "jade": "*",
+      "stylus": "*",
+      "supervisor": "*",
+      "connect-level":"*",
+      "underscore":"*"
+    },
+    "devDependencies": { 
+      "request": "*",
+      "mocha": "*",
+      "should": "*"
+    }
+}
