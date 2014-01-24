@@ -1,17 +1,25 @@
 {
-    "name": "Disko",
-    "version": "0.0.0",
-    "dependencies": { 
-      "express": "*",
-      "jade": "*",
-      "stylus": "*",
-      "supervisor": "*",
-      "connect-level":"*",
-      "underscore":"*"
-    },
-    "devDependencies": { 
-      "request": "*",
-      "mocha": "*",
-      "should": "*"
-    }
+  "name": "Disko",
+  "version": "0.0.0",
+  "dependencies": {
+    "express": "3.4.8",
+    "jade": "1.1.5",
+    "stylus": "0.42.1",
+    "supervisor": "0.5.6",
+    "underscore": "1.5.2",
+    "markdown": "0.5.0",
+    "mongoose": "3.8.4",
+    "session-mongoose": "0.4.1",
+    "forever": "0.10.11",
+    "sha1": "1.1.0"
+  },
+  "devDependencies": {
+    "request": "2.33.0",
+    "mocha": "1.17.1",
+    "should": "3.1.0",
+    "coveralls": "2.6.1",
+    "mocha-lcov-reporter": "0.0.1",
+    "istanbul": "0.2.4",
+    "request": "2.33.0"
+  }
 }
