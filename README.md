@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/chriscx/Disko.png)](https://travis-ci.org/chriscx/Disko)
+
 Disko
 =====
 
