@@ -15,8 +15,8 @@ app.use express.errorHandler
   dumpExceptions: true
 
 # Https Config
-keyPath = '../ssl/server.key'
-certPath = '../ssl/server.crt'
+keyPath = __dirname + '/../ssl/server.key'
+certPath = __dirname + '/../ssl/server.crt'
 
 options =
     key: fs.readFileSync(keyPath),
@@ -28,4 +28,4 @@ app.get '/', (req, res) ->
 
 server = https.createServer options, app
 server.listen 3000, () ->
-    console.log 'https://localhost:' + config.port
+    console.log 'https://localhost:3000'
