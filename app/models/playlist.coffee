@@ -1,7 +1,7 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
-playlistSchema = new Schema(
+PlaylistSchema = new Schema(
   title: String
   owner: String
   editors: [id: String]
@@ -9,7 +9,7 @@ playlistSchema = new Schema(
   content: [assetSchema]
 )
 
-Playlist = mongoose.model 'Playlist', playlistSchema
+Playlist = mongoose.model 'Playlist', PlaylistSchema
 
 module.exports =
   Playlist:  Playlist

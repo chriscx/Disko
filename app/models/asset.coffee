@@ -1,7 +1,7 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
-assetSchema = new Schema(
+AssetSchema = new Schema(
   title: String
   author: String
   addedBy: String
@@ -10,7 +10,7 @@ assetSchema = new Schema(
   src: String
 )
 
-Asset = mongoose.model 'Asset', assetSchema
+Asset = mongoose.model 'Asset', AssetSchema
 
 module.exports =
   Asset: Asset
