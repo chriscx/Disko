@@ -1,7 +1,7 @@
 REPORTER = dot
 
 build:
-	@./node_modules/.bin/coffee -b -o lib src/*.coffee
+	@./node_modules/.bin/coffee -o lib/ -b -c src/
 	@./node_modules/.bin/jade views/* -o public/
 
 test: build
