@@ -8,10 +8,12 @@ PlaylistSchema = new Schema(
   editors: [id: String]
   visibility: String
   content: [assetSchema]
+  creationDate: Date
+  modificationDate: Date
 )
 
 Playlist = mongoose.model 'Playlist', PlaylistSchema
 
 module.exports =
-  Playlist:  Playlist
+  Playlist: Playlist
   Schema: PlaylistSchema
