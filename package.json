@@ -14,7 +14,8 @@
     "sha1": "1.1.0",
     "passport": "^0.2.0",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^0.3.0"
+    "passport-local-mongoose": "^0.3.0",
+    "chai": "~1.9.1"
   },
   "devDependencies": {
     "coffee-script": "1.7.1",

@@ -1,4 +1,5 @@
 mongoose = require 'mongoose'
+AssetSchema = require ('./asset').Schema
 Schema = mongoose.Schema
 
 PlaylistSchema = new Schema(
@@ -13,3 +14,4 @@ Playlist = mongoose.model 'Playlist', PlaylistSchema
 
 module.exports =
   Playlist:  Playlist
+  Schema: PlaylistSchema

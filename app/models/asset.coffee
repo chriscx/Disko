@@ -8,9 +8,11 @@ AssetSchema = new Schema(
   addedDate: String
   url: String
   src: String
+  order: Number
 )
 
 Asset = mongoose.model 'Asset', AssetSchema
 
 module.exports =
   Asset: Asset
+  Schema: AssetSchema
