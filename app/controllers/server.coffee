@@ -2,8 +2,8 @@ fs = require 'fs'
 https = require 'https'
 http = require 'http'
 express = require 'express'
-passport = require 'passport';
-LocalStrategy = require('passport-local').Strategy;
+passport = require 'passport'
+LocalStrategy = require('passport-local').Strategy
 app = express()
 
 # Express Config

@@ -1,10 +1,11 @@
 mongoose = require 'mongoose'
-PlaylistSchema = require ('./playlist').Schema
+Playlist = require './playlist'
+PlaylistSchema = Playlist.Schema
 Schema = mongoose.Schema
-passportLocalMongoose = require 'passport-local-mongoose';
+passportLocalMongoose = require 'passport-local-mongoose'
 
 AccountSchema = new Schema(
-  nickname: 
+  nickname:
   	type: String
   	index: true
   	unique: true
@@ -12,7 +13,7 @@ AccountSchema = new Schema(
   playlists: [PlaylistSchema]
   )
 
-Account.plugin passportLocalMongoose
+AccountSchema.plugin passportLocalMongoose
 
 Account = mongoose.model 'Account', AccountSchema
 

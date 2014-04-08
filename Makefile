@@ -8,4 +8,7 @@ build:
 test: build
 	@NODE_ENV=test ./node_modules/.bin/mocha test/*
 
+start: build
+	node lib/controllers/server.js
+
 .PHONY: test

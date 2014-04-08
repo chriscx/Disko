@@ -1,5 +1,6 @@
 mongoose = require 'mongoose'
-AssetSchema = require ('./asset').Schema
+Asset = require './asset'
+AssetSchema = Asset.Schema
 Schema = mongoose.Schema
 
 PlaylistSchema = new Schema(
@@ -7,7 +8,7 @@ PlaylistSchema = new Schema(
   owner: String
   editors: [id: String]
   visibility: String
-  content: [assetSchema]
+  content: [AssetSchema]
   creationDate: Date
   modificationDate: Date
 )

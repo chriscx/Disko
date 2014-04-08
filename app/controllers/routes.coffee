@@ -1,5 +1,5 @@
 passport = require 'passport'
-Account = require ('./models/account').Account
+Account = require('./models/account').Account;
 
 module.exports = (app) ->
 
