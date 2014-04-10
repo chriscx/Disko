@@ -1,6 +1,6 @@
 should = require("should")
 mongoose = require("mongoose")
-Account = require("../models/account.js")
+Account = require("../lib/models/account")
 db = undefined
 describe "Account", ->
   before (done) ->

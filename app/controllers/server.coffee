@@ -3,6 +3,7 @@ https = require 'https'
 http = require 'http'
 express = require 'express'
 passport = require 'passport'
+mongoose = require 'mongoose'
 LocalStrategy = require('passport-local').Strategy
 app = express()
 
@@ -30,7 +31,7 @@ app.configure "production", ->
   app.use express.errorHandler()
 
 # passport config
-Account = require("../models/account")
+Account = require("../models/account").Account
 passport.use new LocalStrategy(Account.authenticate())
 passport.serializeUser Account.serializeUser()
 passport.deserializeUser Account.deserializeUser()
