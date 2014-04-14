@@ -1,25 +1,25 @@
 fs = require 'fs'
+path = require 'path'
 https = require 'https'
 http = require 'http'
 express = require 'express'
-passport = require 'passport'
-LocalStrategy = require('passport-local').Strategy
+# passport = require 'passport'
+# LocalStrategy = require('passport-local').Strategy
+mongoose = require 'mongoose'
 app = express()
 
 # Express Config
-app.set 'views', __dirname + '/../views'
+app.set 'views', path.normalize(__dirname + '/views')
 app.set 'view engine', 'jade'
-app.set "view options",
-  layout: false
-
+app.set 'view options', pretty: true
 app.use express.bodyParser()
 app.use express.methodOverride()
 app.use express.cookieParser("your secret here")
 app.use express.session()
-app.use passport.initialize()
-app.use passport.session()
+# app.use passport.initialize()
+# app.use passport.session()
 app.use app.router
-app.use express.static "#{__dirname}/../../public"
+# app.use express.static "#{__dirname}/../../public"
 
 app.configure "development", ->
   app.use express.errorHandler
@@ -30,15 +30,16 @@ app.configure "production", ->
   app.use express.errorHandler()
 
 # passport config
-Account = require("../models/account")
-passport.use new LocalStrategy(Account.authenticate())
-passport.serializeUser Account.serializeUser()
-passport.deserializeUser Account.deserializeUser()
+# Account = require("../models/account")
+# passport.use new LocalStrategy(Account.authenticate())
+# passport.serializeUser Account.serializeUser()
+# passport.deserializeUser Account.deserializeUser()
 
 # mongoose
-mongoose.connect "mongodb://localhost/passport_local_mongoose"
+# mongoose.connect "mongodb://localhost/passport_local_mongoose"
+mongoose.connect 'mongodb://localhost/disko_dev'
 
-require('./routes') app
+require('./controllers/routes') app
 
 # # Https Config
 # keyPath = __dirname + '/../ssl/server.key'

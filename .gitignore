@@ -39,4 +39,5 @@ Thumbs.db
 *.sublime-workspace
 /node_modules
 /ssl
-/test/js
+/test/build
+/dev

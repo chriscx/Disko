@@ -1,12 +1,25 @@
 extends layout
 block append content
-if (!user)
-  a(href="/login") Login
-  br
-  a(href="/register") Register
-if (user)
-  p You are currently logged in as #{user.username}
-  a(href="/logout") Logout
   .container
-    .row
-      p Hello World
+    h1 Disko
+    p.lead Playlist Manager
+    br
+    div(ng-controller='playlistController')
+      tbody
+        tr(ng-repeat='item in playlist.content | orderBy:sortingOrder:reverse')
+            td {{item.title}}
+            td {{item.author}}
+            td {{item.addedBy}}
+            td {{item.addedDate}}
+            td {{item.url}}
+            td {{item.src}}
+    script(type='text/javascript').
+      var DiskoApp = angular.module('DiskoApp', []);
+
+      phonecatApp.controller('PhoneListCtrl',function playlistController($scope) {
+
+        $.get('playlists.json', function(data) {
+          $scope.playlist = data.content[0];
+          alert($scope.playlist);
+        });
+      }

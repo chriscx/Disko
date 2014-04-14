@@ -5,6 +5,7 @@ Schema = mongoose.Schema
 
 PlaylistSchema = new Schema(
   title: String
+  id: String
   owner: String
   editors: [id: String]
   visibility: String

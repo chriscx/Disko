@@ -1,9 +1,10 @@
 doctype html
-html
+html(ng-app='Disko')
   head
     title Disko
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     link(href="//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800" rel="stylesheet" type="text/css")
-  block content
-    body(data-spy="scroll" data-target="#nav-scrollspy")
-    include scripts
+    link(href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css", rel="stylesheet")
+    block content
+      body(data-spy="scroll" data-target="#nav-scrollspy")
+      include scripts

@@ -20,3 +20,13 @@ html
       &nbsp;
       a(href='/')
         button.btn.btn-primary(type="button") Cancel
+        //- if (!user)
+        //-   a(href="/login") Login
+        //-   br
+        //-   a(href="/register") Register
+        //- if (user)
+        //-   p You are currently logged in as #{user.username}
+        //-   a(href="/logout") Logout
+        //-   .container
+        //-     .row
+        //-       p Hello World
