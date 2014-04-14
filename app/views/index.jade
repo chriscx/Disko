@@ -16,7 +16,7 @@ block append content
     script(type='text/javascript').
       var DiskoApp = angular.module('DiskoApp', []);
 
-      phonecatApp.controller('PhoneListCtrl',function playlistController($scope) {
+      DiskoApp.controller('PhoneListCtrl',function playlistController($scope) {
 
         $.get('playlists.json', function(data) {
           $scope.playlist = data.content[0];

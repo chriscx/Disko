@@ -6,6 +6,7 @@ express = require 'express'
 # passport = require 'passport'
 # LocalStrategy = require('passport-local').Strategy
 mongoose = require 'mongoose'
+
 app = express()
 
 # Express Config
