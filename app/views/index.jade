@@ -4,22 +4,39 @@ block append content
     h1 Disko
     p.lead Playlist Manager
     br
-    div(ng-controller='playlistController')
-      tbody
-        tr(ng-repeat='item in playlist.content | orderBy:sortingOrder:reverse')
+    script(type='text/javascript').
+      var DiskoApp = angular.module('DiskoApp', []);
+
+      DiskoApp.controller('playlistController',function($scope) {
+
+        $.get('playlists.json', function(data) {
+          $scope.$apply(function(){
+            $scope.playlist = data.content[0].content;
+          });
+        });
+        console.log($scope.playlist);
+      });
+    .row
+      .btn-toolbar
+        .btn-group
+          button.btn.btn-default(type='button') Like
+          button.btn.btn-default(type='button') Share
+        .btn-group
+          button.btn.btn-default(type='button') Fork
+    .row
+      div(ng-controller='playlistController')
+        table.table
+          tr
+            th Title
+            th Author
+            th Added By
+            th Added Date
+            th url
+            th src
+          tr(ng-repeat='item in playlist | orderBy:sortingOrder:reverse')
             td {{item.title}}
             td {{item.author}}
             td {{item.addedBy}}
             td {{item.addedDate}}
             td {{item.url}}
             td {{item.src}}
-    script(type='text/javascript').
-      var DiskoApp = angular.module('DiskoApp', []);
-
-      DiskoApp.controller('PhoneListCtrl',function playlistController($scope) {
-
-        $.get('playlists.json', function(data) {
-          $scope.playlist = data.content[0];
-          alert($scope.playlist);
-        });
-      }
