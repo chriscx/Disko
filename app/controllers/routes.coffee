@@ -5,19 +5,24 @@ Playlist = require('../models/playlist').Playlist
 module.exports = (app) ->
 
   app.get '/', (req, res) ->
-    console.log('GET index')
+    console.log('GET view index')
     res.render 'index',
     title: 'Disko'
 
-  app.get '/playlist/:id.json', (req, res) ->
-    console.log('GET playlist' + req.params.id + ' JSON object')
+  app.get '/playlist', (req, res) ->
+    console.log('GET view playlist')
+    res.render 'playlist',
+    title: 'Disko'
+
+  app.get 'data/playlist/:id.json', (req, res) ->
+    console.log('GET playlist ' + req.params.id + ' JSON object')
     Playlist.find {id: req.params.id}, (err, data) ->
       if !err
         res.json {result: 'OK', content: data}
       else
         res.json {result: 'error', content: null}
 
-  app.get '/playlists.json', (req, res) ->
+  app.get 'data/playlists.json', (req, res) ->
     console.log('GET playlist' + req.params.id + ' JSON object')
     Playlist.find {}, (err, data) ->
       if !err

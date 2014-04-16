@@ -38,7 +38,7 @@ app.configure "production", ->
 
 # mongoose
 # mongoose.connect "mongodb://localhost/passport_local_mongoose"
-mongoose.connect 'mongodb://localhost/disko_dev'
+######mongoose.connect 'mongodb://localhost/disko_dev'
 
 require('./controllers/routes') app
 

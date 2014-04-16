@@ -17,19 +17,174 @@
     <script type="text/javascript">
       var DiskoApp = angular.module('DiskoApp', []);
       
-      DiskoApp.controller('playlistController',function($scope) {
-        $.get('playlists.json', function(data) {
-          $scope.playlist = data.content[0].content;
-          //- console.log($scope.playlist);
-        });
+      DiskoApp.controller('indexController',function($scope) {
+      
+        //- $.get('playlists.json', function(data) {
+        //-   $scope.$apply(function(){
+        //-     $scope.playlist = data.content[0].content;
+        //-   });
+        //- });
+        //- console.log($scope.playlist);
       });
     </script>
-    <div ng-controller="playlistController">
-      <table class="table">
-        <tr ng-repeat="item in playlist">
-          <td>{{item.title}}</td>
-        </tr>
-      </table>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="jumbotron">
+          <h3>
+            This is Disko. A multi-source social playlist manager that supports, soundcloud, youtube, etc whatever has an embed code.
+            Start by searching for a song or a specific playlist!
+          </h3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">New Songs</div>
+          <div class="panel-body">
+            <table class="table">
+              <tr>
+                <td>glyphicon glyphicon-thumbs-up</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-pushpin</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-collapse-down</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-collapse-up</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-saved</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-share</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-thumbs-up</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-pushpin</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-collapse-down</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-collapse-up</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <h3>Search :</h3>
+                <div class="input-group">
+                  <input type="text" class="form-control"><span class="input-group-btn">
+                    <button type="button" class="btn btn-default">Go!</button></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">Hottest Songs</div>
+              <div class="panel-body">
+                <table class="table">
+                  <tr>
+                    <td>glyphicon glyphicon-thumbs-up</td>
+                  </tr>
+                  <tr>
+                    <td>glyphicon glyphicon-pushpin</td>
+                  </tr>
+                  <tr>
+                    <td>glyphicon glyphicon-collapse-down</td>
+                  </tr>
+                  <tr>
+                    <td>glyphicon glyphicon-collapse-up</td>
+                  </tr>
+                  <tr>
+                    <td>glyphicon glyphicon-saved</td>
+                  </tr>
+                  <tr>
+                    <td>glyphicon glyphicon-share</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">Hottest Playlists</div>
+              <div class="panel-body">
+                <table class="table">
+                  <tr>
+                    <td>glyphicon glyphicon-thumbs-up</td>
+                  </tr>
+                  <tr>
+                    <td>glyphicon glyphicon-pushpin</td>
+                  </tr>
+                  <tr>
+                    <td>glyphicon glyphicon-collapse-down</td>
+                  </tr>
+                  <tr>
+                    <td>glyphicon glyphicon-collapse-up</td>
+                  </tr>
+                  <tr>
+                    <td>glyphicon glyphicon-saved</td>
+                  </tr>
+                  <tr>
+                    <td>glyphicon glyphicon-share</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">New Playlists</div>
+          <div class="panel-body">
+            <table class="table">
+              <tr>
+                <td>glyphicon glyphicon-thumbs-up</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-pushpin</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-collapse-down</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-collapse-up</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-saved</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-share</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-thumbs-up</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-pushpin</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-collapse-down</td>
+              </tr>
+              <tr>
+                <td>glyphicon glyphicon-collapse-up</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </html>

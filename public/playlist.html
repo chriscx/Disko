@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html ng-app="DiskoApp">
+  <head>
+    <title>Disko</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800" rel="stylesheet" type="text/css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <script src="http://yui.yahooapis.com/pure/0.4.2/pure-min.css"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+  <body data-spy="scroll" data-target="#nav-scrollspy"></body>
+  <div class="container">
+    <h1>Disko</h1>
+    <p class="lead">Playlist Manager</p><br>
+    <script type="text/javascript">
+      var DiskoApp = angular.module('DiskoApp', []);
+      
+      DiskoApp.controller('playlistController',function($scope) {
+      
+        $.get('data/playlists.json', function(data) {
+          $scope.$apply(function(){
+            $scope.playlist = data.content[0].content;
+          });
+        });
+        console.log($scope.playlist);
+      });
+    </script>
+    <div class="row">
+      <div class="btn-toolbar">
+        <div class="btn-group">
+          <button type="button" class="btn btn-default">Like</button>
+          <button type="button" class="btn btn-default">Share</button>
+          <div class="btn-group"></div>
+          <button type="button" class="btn btn-default">Manage</button>
+          <button type="button" class="btn btn-default">Visibility</button>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default">Fork</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-5">
+        <div ng-controller="playlistController">
+          <table class="table">
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+            </tr>
+            <tr ng-repeat="item in playlist | orderBy:sortingOrder:reverse">
+              <td>{{item.title}}</td>
+              <td>{{item.author}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <object id="gsSong2737846533" width="250" height="40" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" name="gsSong2737846533"></object>
+        <param name="movie" value="http://grooveshark.com/songWidget.swf">
+        <param name="wmode" value="window">
+        <param name="allowScriptAccess" value="always">
+        <param name="flashvars" value="hostname=grooveshark.com&amp;songID=27378465&amp;style=metal&amp;p=0">
+        <object type="application/x-shockwave-flash" data="http://grooveshark.com/songWidget.swf" width="250" height="40"></object>
+        <param name="wmode" value="window">
+        <param name="allowScriptAccess" value="always">
+        <param name="flashvars" value="hostname=grooveshark.com&amp;songID=27378465&amp;style=metal&amp;p=0">
+      </div>
+    </div>
+  </div>
+</html>

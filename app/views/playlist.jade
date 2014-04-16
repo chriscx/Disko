@@ -1,0 +1,65 @@
+extends layout
+block append content
+  .container
+    h1 Disko
+    p.lead Playlist Manager
+    br
+    script(type='text/javascript').
+      var DiskoApp = angular.module('DiskoApp', []);
+
+      DiskoApp.controller('playlistController',function($scope) {
+
+        $.get('data/playlists.json', function(data) {
+          $scope.$apply(function(){
+            $scope.playlist = data.content[0].content;
+          });
+        });
+        console.log($scope.playlist);
+      });
+    .row
+      .btn-toolbar
+        .btn-group
+          button.btn.btn-default(type='button') Like
+          button.btn.btn-default(type='button') Share
+          .btn-group
+          button.btn.btn-default(type='button') Manage
+          button.btn.btn-default(type='button') Visibility
+        .btn-group
+          button.btn.btn-default(type='button') Fork
+    .row
+      .col-md-5
+        div(ng-controller='playlistController')
+          table.table
+            tr
+              th 
+              th Title
+              th Author
+              //- th Added By
+              //- th Added Date
+              //- th url
+              //- th src
+            tr(ng-repeat='item in playlist | orderBy:sortingOrder:reverse')
+              td
+                button.btn(type='button')
+                  span.glyphicon.glyphicon-play
+              td {{item.title}}
+              td {{item.author}}
+              //- td {{item.addedBy}}
+              //- td {{item.addedDate}}
+              //- td {{item.url}}
+              //- td {{item.src}}
+      .col-md-7
+        .row
+          object#gsSong2737846533(width='100%', height='40', classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000', name='gsSong2737846533')
+            param(name='movie', value='http://grooveshark.com/songWidget.swf')
+            param(name='wmode', value='window')
+            param(name='allowScriptAccess', value='always')
+            param(name='flashvars', value='hostname=grooveshark.com&songID=27378465&style=metal&p=0')
+          object(type='application/x-shockwave-flash', data='http://grooveshark.com/songWidget.swf', width='250', height='40')
+            param(name='wmode', value='window')
+            param(name='allowScriptAccess', value='always')
+            param(name='flashvars', value='hostname=grooveshark.com&songID=27378465&style=metal&p=0')
+        .row
+          iframe(width='560', height='315', src='//www.youtube.com/embed/LtMS5eOOeQQ', frameborder='0', allowfullscreen='allowfullscreen')
+        .row
+          iframe(width='100%', height='80', scrolling='no', frameborder='no', src='https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/22378682%3Fsecret_token%3Ds-MPdkG&auto_play=false&hide_related=false&visual=true')
