@@ -10,10 +10,28 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
-  <body data-spy="scroll" data-target="#nav-scrollspy"></body>
+  <body data-spy="scroll" data-target="#nav-scrollspy" style="background-style:url('http://interfacelift.com/wallpaper/Df0c8f48/03532_stairwaytoheaven_1440x900.jpg');">
+    <style>type="text/css".table-hover>tbody>tr:hover>td {
+  background-color: #505;
+  color: #eee;
+}
+
+    </style>
+  </body>
   <div class="container">
-    <h1>Disko</h1>
-    <p class="lead">Playlist Manager</p><br>
+    <div class="row">
+      <div class="col-md-8">
+        <h1>Disko</h1>
+        <p class="lead">Playlist Manager</p>
+      </div>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-body"><img src="http://www.niss.fr/wp-content/themes/mimbo2.2_stef/images/admin.jpg" class="img-circle"><span>Tim Robs</span>
+            <button>Log out</button>
+          </div>
+        </div>
+      </div>
+    </div><br>
     <script type="text/javascript">
       var DiskoApp = angular.module('DiskoApp', []);
       
@@ -28,38 +46,59 @@
       });
     </script>
     <div class="row">
-      <div class="col-md-12">
-        <div class="btn-toolbar">
-          <div class="btn-group">
-            <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-step-backward"></span> Previous</button>
-            <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-play"></span> Play</button>
-            <Button type="button" class="btn btn-default hide"><span class="glyphicon glyphicon-pause"></span> Pause</Button>
-            <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-step-forward"></span> Next</button>
-          </div>
-          <div class="btn-group">
-            <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-thumbs-up"></span> Like</button>
-            <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-share"></span> Share</button>
-          </div>
-          <div class="btn-group">
-            <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span> Manage</button>
-          </div>
-          <div class="btn-group">
-            <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-share-alt"></span> Fork</button>
+      <div class="col-md-7">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="btn-toolbar">
+              <div class="btn-group">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-step-backward"></span> Previous</button>
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-play"></span> Play</button>
+                <Button type="button" class="btn btn-default hide"><span class="glyphicon glyphicon-pause"></span> Pause</Button>
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-step-forward"></span> Next</button>
+              </div>
+              <div class="btn-group">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-thumbs-up"></span> Like</button>
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-share"></span> Share</button>
+              </div>
+              <div class="btn-group">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span> Manage</button>
+              </div>
+              <div class="btn-group">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-share-alt"></span> Fork</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="row"><br></div>
-    <div class="row">
-      <div class="col-md-7">
-        <div ng-controller="playlistController">
-          <div ng-repeat="item in playlist | orderBy:sortingOrder:reverse" class="list-group"><a href="#" class="list-group-item active">
-              <p class="list-group-item-text">{{item.title}} - {{item.author}}  3:0</p></a></div>
+        <div class="row"><br></div>
+        <div class="row">
+          <div class="col-md-12">
+            <div ng-controller="playlistController">
+              <table class="table table-hover">
+                <tr>
+                  <th>Song</th>
+                  <th>Duration</th>
+                </tr>
+                <tr ng-repeat="item in playlist | orderBy:sortingOrder:reverse">
+                  <td><a> {{item.title}} - {{item.author}}</a></td>
+                  <td>
+                    <3:10></3:10>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-md-5">
         <div class="row">
-          <iframe width="100%" height="100" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/143859829&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;visual=false"></iframe>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4>Player :</h4>
+            </div>
+            <div class="panel-body">
+              <iframe width="100%" height="100" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/143859829&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;visual=false"></iframe>
+            </div>
+          </div>
         </div>
         <div class="row hide">
           <iframe width="100%" height="100" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/5843667&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;visual=false"></iframe>
@@ -67,7 +106,39 @@
         <div class="row hide">
           <iframe width="100%" height="100" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/53371201&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;visual=false"></iframe>
         </div>
-        <div class="row"></div>
+        <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4>Playlist Comments :</h4>
+            </div>
+            <div class="panel-body">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <h5>Post a Comment :</h5>
+                  <div class="input-group">
+                    <input type="text" class="form-control"><span class="input-group-btn">
+                      <button type="button" class="btn btn-default">Go!</button></span>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <h5><a>Paul Martin :</a></h5><span> Cras justo odio</span>
+                </li>
+                <li class="list-group-item">
+                  <h5><a>John jones :</a></h5><span>Dapibus ac facilisis in</span>
+                </li>
+                <li class="list-group-item">
+                  <h5><a>Jack Ripper :</a></h5><span>Morbi leo risus</span>
+                </li>
+                <li class="list-group-item">
+                  <h5><a>Nath portman :</a></h5><span>Porta ac consectetur ac</span>
+                </li>
+                <li class="list-group-item">
+                  <h5><a>Bill jobs :</a></h5><span>Vestibulum at eros</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

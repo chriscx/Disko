@@ -71,7 +71,7 @@ block append content
             //-         span.inline.right 3.10
 
             div(ng-controller='playlistController')
-              table.table
+              table.table.table-hover
                 tr
                   //- th
                   th Song
@@ -86,7 +86,8 @@ block append content
                   //-     span.glyphicon.glyphicon-play
                   td
                     a  {{item.title}} - {{item.author}}
-                  td 3:10
+                  td
+                     3:10
                   //- td {{item.addedBy}}
                   //- td {{item.addedDate}}
                   //- td {{item.url}}

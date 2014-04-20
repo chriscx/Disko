@@ -6,6 +6,7 @@ express = require 'express'
 # passport = require 'passport'
 # LocalStrategy = require('passport-local').Strategy
 mongoose = require 'mongoose'
+stylus = require 'stylus'
 
 app = express()
 
@@ -20,7 +21,8 @@ app.use express.session()
 # app.use passport.initialize()
 # app.use passport.session()
 app.use app.router
-# app.use express.static "#{__dirname}/../../public"
+app.use stylus.middleware "#{__dirname}/../public"
+app.use express.static "#{__dirname}/../../public"
 
 app.configure "development", ->
   app.use express.errorHandler

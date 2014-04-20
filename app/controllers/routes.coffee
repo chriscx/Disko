@@ -9,6 +9,9 @@ module.exports = (app) ->
     res.render 'index',
     title: 'Disko'
 
+  # app.get '/css/:filename.css', (req, res) ->
+  #   res.sendfile('../../public/css/' + req.params.filename + '.css');
+
   app.get '/player', (req, res) ->
     console.log('GET view playlist')
     res.render 'player',
@@ -22,7 +25,7 @@ module.exports = (app) ->
       else
         res.json {result: 'error', content: null}
 
-//temp
+# //temp
   app.get '/data/playlists.json', (req, res) ->
     console.log('GET playlist' + req.params.id + ' JSON object')
     Playlist.find {}, (err, data) ->
