@@ -9,20 +9,21 @@ module.exports = (app) ->
     res.render 'index',
     title: 'Disko'
 
-  app.get '/playlist', (req, res) ->
+  app.get '/player', (req, res) ->
     console.log('GET view playlist')
-    res.render 'playlist',
+    res.render 'player',
     title: 'Disko'
 
-  app.get 'data/playlist/:id.json', (req, res) ->
-    console.log('GET playlist ' + req.params.id + ' JSON object')
+  app.get '/data/:user/:playlist.json', (req, res) ->
+    console.log('GET playlist ' + req.params.playlist + ' JSON object')
     Playlist.find {id: req.params.id}, (err, data) ->
       if !err
         res.json {result: 'OK', content: data}
       else
         res.json {result: 'error', content: null}
 
-  app.get 'data/playlists.json', (req, res) ->
+//temp
+  app.get '/data/playlists.json', (req, res) ->
     console.log('GET playlist' + req.params.id + ' JSON object')
     Playlist.find {}, (err, data) ->
       if !err

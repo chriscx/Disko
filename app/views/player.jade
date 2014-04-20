@@ -1,0 +1,148 @@
+extends layout
+block append content
+  .container
+    .row
+      .col-md-8
+        h1 Disko
+        p.lead Playlist Manager
+      .col-md-4
+        .panel.panel-default
+          .panel-body
+            img.img-circle(src='http://www.niss.fr/wp-content/themes/mimbo2.2_stef/images/admin.jpg')
+            span Tim Robs
+            button Log out
+    br
+    script(type='text/javascript').
+      var DiskoApp = angular.module('DiskoApp', []);
+
+      DiskoApp.controller('playlistController',function($scope) {
+
+        $.get('data/playlists.json', function(data) {
+          $scope.$apply(function(){
+            $scope.playlist = data.content[0].content;
+          });
+        });
+        console.log($scope.playlist);
+      });
+    .row
+      .col-md-7
+        .row
+          .col-md-12
+            .btn-toolbar
+              .btn-group
+                button.btn.btn-default(type='button')
+                  span.glyphicon.glyphicon-step-backward
+                  |  Previous
+                button.btn.btn-default(type='button')
+                  span.glyphicon.glyphicon-play
+                  |  Play
+                Button.btn.btn-default.hide(type='button')
+                  span.glyphicon.glyphicon-pause
+                  |  Pause
+                button.btn.btn-default(type='button')
+                  span.glyphicon.glyphicon-step-forward
+                  |  Next
+              .btn-group
+                button.btn.btn-default(type='button')
+                  span.glyphicon.glyphicon-thumbs-up
+                  |  Like
+                button.btn.btn-default(type='button')
+                  span.glyphicon.glyphicon-share
+                  |  Share
+              .btn-group
+                button.btn.btn-default(type='button')
+                  span.glyphicon.glyphicon-cog
+                  |  Manage
+              .btn-group
+                button.btn.btn-default(type='button')
+                  span.glyphicon.glyphicon-share-alt
+                  |  Fork
+        .row
+          br
+        .row
+          .col-md-12
+            //- div(ng-controller='playlistController')
+            //-   div.list-group
+            //-     a.list-group-item(ng-repeat='item in playlist | orderBy:sortingOrder:reverse')
+            //-       //- h4.list-group-item-heading List group item heading
+            //-       p.list-group-item-text
+            //-         p {{item.author}}
+            //-         p {{item.title}}
+            //-         span.inline.right 3.10
+
+            div(ng-controller='playlistController')
+              table.table
+                tr
+                  //- th
+                  th Song
+                  th Duration
+                  //- th Added By
+                  //- th Added Date
+                  //- th url
+                  //- th src
+                tr(ng-repeat='item in playlist | orderBy:sortingOrder:reverse')
+                  //- td
+                  //-   button.btn(type='button')
+                  //-     span.glyphicon.glyphicon-play
+                  td
+                    a  {{item.title}} - {{item.author}}
+                  td 3:10
+                  //- td {{item.addedBy}}
+                  //- td {{item.addedDate}}
+                  //- td {{item.url}}
+                  //- td {{item.src}}
+      .col-md-5
+        //- .row
+        //-   object#gsSong2737846533(width='100%', height='40', classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000', name='gsSong2737846533')
+        //-     param(name='movie', value='http://grooveshark.com/songWidget.swf')
+        //-     param(name='wmode', value='window')
+        //-     param(name='allowScriptAccess', value='always')
+        //-     param(name='flashvars', value='hostname=grooveshark.com&songID=27378465&style=metal&p=0')
+        //-   object(type='application/x-shockwave-flash', data='http://grooveshark.com/songWidget.swf', width='250', height='40')
+        //-     param(name='wmode', value='window')
+        //-     param(name='allowScriptAccess', value='always')
+        //-     param(name='flashvars', value='hostname=grooveshark.com&songID=27378465&style=metal&p=0')
+        //- .row
+        //-   iframe(width='100%', height='100', src='//www.youtube.com/embed/LtMS5eOOeQQ', frameborder='0', allowfullscreen='allowfullscreen')
+        .row
+          .panel.panel-default
+            .panel-heading
+              h4 Player :
+            .panel-body
+              iframe(width="100%" height="100" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/143859829&amp;auto_play=false&amp;hide_related=false&amp;visual=false")
+        .row.hide
+          iframe(width="100%" height="100" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/5843667&amp;auto_play=false&amp;hide_related=false&amp;visual=false")
+        .row.hide
+          iframe(width="100%" height="100" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/53371201&amp;auto_play=false&amp;hide_related=false&amp;visual=false")
+        .row
+          .panel.panel-default
+            .panel-heading
+              h4 Playlist Comments :
+            .panel-body
+              ul.list-group
+                li.list-group-item
+                  h5 Post a Comment :
+                  .input-group
+                    input.form-control(type='text')
+                    span.input-group-btn
+                      button.btn.btn-default(type='button') Go!
+                li.list-group-item
+                  h5
+                    a Paul Martin :
+                  span  Cras justo odio
+                li.list-group-item
+                  h5
+                    a John jones :
+                  span Dapibus ac facilisis in
+                li.list-group-item
+                  h5
+                    a Jack Ripper :
+                  span Morbi leo risus
+                li.list-group-item
+                  h5
+                    a Nath portman :
+                  span Porta ac consectetur ac
+                li.list-group-item
+                  h5
+                    a Bill jobs :
+                  span Vestibulum at eros
