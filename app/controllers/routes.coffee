@@ -9,13 +9,17 @@ module.exports = (app) ->
     res.render 'index',
     title: 'Disko'
 
-  # app.get '/css/:filename.css', (req, res) ->
-  #   res.sendfile('../../public/css/' + req.params.filename + '.css');
-
   app.get '/player', (req, res) ->
-    console.log('GET view playlist')
+    console.log('GET view player')
     res.render 'player',
     title: 'Disko'
+
+  app.get 'playlists', (req, res) ->
+    console.log('GET view playlists')
+    res.render 'playlists'
+    title; 'Disko'
+
+  
 
   app.get '/data/:user/:playlist.json', (req, res) ->
     console.log('GET playlist ' + req.params.playlist + ' JSON object')
@@ -25,7 +29,6 @@ module.exports = (app) ->
       else
         res.json {result: 'error', content: null}
 
-# //temp
   app.get '/data/playlists.json', (req, res) ->
     console.log('GET playlist' + req.params.id + ' JSON object')
     Playlist.find {}, (err, data) ->
