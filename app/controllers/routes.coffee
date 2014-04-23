@@ -14,12 +14,10 @@ module.exports = (app) ->
     res.render 'player',
     title: 'Disko'
 
-  app.get 'playlists', (req, res) ->
+  app.get '/playlists', (req, res) ->
     console.log('GET view playlists')
     res.render 'playlists'
-    title; 'Disko'
-
-  
+    title: 'Disko'
 
   app.get '/data/:user/:playlist.json', (req, res) ->
     console.log('GET playlist ' + req.params.playlist + ' JSON object')
