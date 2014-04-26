@@ -5,7 +5,7 @@ should = require("should");
 
 mongoose = require("mongoose");
 
-Account = require("../models/account.js");
+Account = require("../app/models/account");
 
 db = void 0;
 
