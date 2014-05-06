@@ -1,6 +1,6 @@
 should = require("should")
 mongoose = require("mongoose")
-Account = require("../lib/models/account")
+Account = require("../app/models/account")
 db = undefined
 describe "Account", ->
   before (done) ->
@@ -15,7 +15,7 @@ describe "Account", ->
     account = new Account
       username: "12345"
       password: "testy"
-    
+
     account.save (error) ->
       if error
         console.log "error" + error.message
