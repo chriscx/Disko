@@ -7,6 +7,8 @@ express = require 'express'
 # LocalStrategy = require('passport-local').Strategy
 mongoose = require 'mongoose'
 stylus = require 'stylus'
+passport = require 'passport'
+Account = require('./models/account').Account
 
 app = express()
 
@@ -32,11 +34,10 @@ app.configure "development", ->
 app.configure "production", ->
   app.use express.errorHandler()
 
-# passport config
-# Account = require("../models/account")
-# passport.use new LocalStrategy(Account.authenticate())
-# passport.serializeUser Account.serializeUser()
-# passport.deserializeUser Account.deserializeUser()
+passport.use Account.createStrategy()
+
+passport.serializeUser Account.serializeUser()
+passport.deserializeUser Account.deserializeUser()
 
 # mongoose
 # mongoose.connect "mongodb://localhost/passport_local_mongoose"
