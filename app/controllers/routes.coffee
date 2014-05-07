@@ -22,7 +22,7 @@ module.exports = (app) ->
   app.get '/data/:user/:playlist.json', (req, res) ->
     console.log('GET playlist ' + req.params.playlist + ' JSON object')
     Playlist.find {id: req.params.id}, (err, data) ->
-      if !err
+      unless err
         res.json {result: 'OK', content: data}
       else
         res.json {result: 'error', content: null}
