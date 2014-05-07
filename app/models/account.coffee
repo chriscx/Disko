@@ -19,3 +19,4 @@ Account = mongoose.model 'Account', AccountSchema
 
 module.exports =
   Account: Account
+  Schema: AccountSchema
