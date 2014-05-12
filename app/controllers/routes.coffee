@@ -1,6 +1,7 @@
 passport = require 'passport'
 Account = require('../models/account').Account;
 Playlist = require('../models/playlist').Playlist
+Getters = require './getter'
 
 module.exports = (app) ->
 
@@ -61,3 +62,8 @@ module.exports = (app) ->
 
   app.get '/ping', (req, res) ->
     res.send 'pong!', 200
+
+  app.get '/getter', (req, res) ->
+    #here fix url before we have views to select one
+    Getters.dispatch 'https://soundcloud.com/chrome-sparks/goddess-1', (data) ->
+      res.send data
