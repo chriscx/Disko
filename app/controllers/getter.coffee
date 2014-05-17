@@ -1,10 +1,14 @@
 #dependencies
 request = require('request')
 colors = require('colors')
+mongoose = require 'mongoose'
+Asset = require('../models/asset').Asset
+
 sources =
   youtube:
     resolver: "https://www.googleapis.com/youtube/v3/videos?key="
     content: "&part=snippet&id="
+    #key: "AIzaSyAPNIZeQOkk7e519amM5raEUM__SOCml78"
     key: "AIzaSyCxL2W7WQKGQ_IKN9ug37rxeJm-Hr0t7Fw"
 
     documentation: "https://developers.google.com/youtube/v3/docs/videos?hl=fr"
@@ -61,22 +65,31 @@ request_url = (url, callback) ->
     else
       callback response.body
 
+Asset.prototype.other_infos = () ->
+  this.addedBy = "User1"
+  this.addedDate = new Date()
+  this.order = 1
+
 ### get the information from the responses and create objects to be stored in our DB ###
 infos_sc = (content, callback) ->
-  track =
+  track = new Asset
     title: content.title
     author: content.user.username
     url: content.uri
     src: "soundcloud"
     id: content.id
+  #adds the other infos for the saving in DB for the moment
+  track.other_infos()
   callback track
 infos_yt = (content, callback) ->
-  track = 
+  track =  new Asset
   	title: content.snippet.title
   	author: content.snippet.channelTitle
   	url: "http://www.youtube.com/watch?v=" + content.id
   	src: "youtube"
   	id: content.id
+  #adds the other infos for the saving in DB for the moment
+  track.other_infos()
   callback track
 
 ### manages the actions of dispatching between the different sources ###
@@ -86,21 +99,12 @@ dispatch = (track, callback) ->
   	switch src
   	  when "youtube"
   	    # to isolate the video id
-        console.log("youtube".white)
         s = track.split("v=")
         s = s[1].split("&")
         track = s[0]
-        ###
-  	    build_url s[0], src, (res) ->
-  	      url = res###
   	  when "soundcloud"
-        console.log "soundcloud".white
-        ###
-  	    build_url track, src, (res) ->
-  	      url = res###
-  	  else console.log "BAD SOURCE".red
+  	  else console.log "SOURCE NOT SUPPORTED YET".red
     url = track.build_url(src)
-    console.log (url).red
     request_url url, (res) ->
       switch src
         when "youtube"
