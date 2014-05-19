@@ -1,6 +1,6 @@
 #dependencies
-request = require('request')
-colors = require('colors')
+request = require 'request'
+colors = require 'colors'
 mongoose = require 'mongoose'
 Asset = require('../models/asset').Asset
 
@@ -81,6 +81,7 @@ infos_sc = (content, callback) ->
   #adds the other infos for the saving in DB for the moment
   track.other_infos()
   callback track
+
 infos_yt = (content, callback) ->
   track =  new Asset
   	title: content.snippet.title
