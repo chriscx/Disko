@@ -1,7 +1,7 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
-AssetSchema = new Schema(
+TrackSchema = new Schema(
   title: String
   author: String
   addedBy: String
@@ -11,8 +11,8 @@ AssetSchema = new Schema(
   order: Number
 )
 
-Asset = mongoose.model 'Asset', AssetSchema
+Track = mongoose.model 'Track', TrackSchema
 
 module.exports =
-  Asset: Asset
-  Schema: AssetSchema
+  Track: Track
+  Schema: TrackSchema

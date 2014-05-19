@@ -1,6 +1,6 @@
 mongoose = require 'mongoose'
-Asset = require './asset'
-AssetSchema = Asset.Schema
+Track = require './track'
+TrackSchema = Track.Schema
 Schema = mongoose.Schema
 
 PlaylistSchema = new Schema(
@@ -9,7 +9,7 @@ PlaylistSchema = new Schema(
   owner: String
   editors: [id: String]
   visibility: String
-  content: [AssetSchema]
+  content: [TrackSchema]
   creationDate: Date
   modificationDate: Date
 )

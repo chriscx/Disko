@@ -2,7 +2,7 @@
 request = require 'request'
 colors = require 'colors'
 mongoose = require 'mongoose'
-Asset = require('../models/asset').Asset
+Track = require('../models/track').Track
 
 sources =
   youtube:
@@ -65,14 +65,14 @@ request_url = (url, callback) ->
     else
       callback response.body
 
-Asset.prototype.other_infos = () ->
+Track.prototype.other_infos = () ->
   this.addedBy = "User1"
   this.addedDate = new Date()
   this.order = 1
 
 ### get the information from the responses and create objects to be stored in our DB ###
 infos_sc = (content, callback) ->
-  track = new Asset
+  track = new Track
     title: content.title
     author: content.user.username
     url: content.uri
@@ -83,7 +83,7 @@ infos_sc = (content, callback) ->
   callback track
 
 infos_yt = (content, callback) ->
-  track =  new Asset
+  track =  new Track
   	title: content.snippet.title
   	author: content.snippet.channelTitle
   	url: "http://www.youtube.com/watch?v=" + content.id
