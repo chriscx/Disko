@@ -1,6 +1,7 @@
 passport = require 'passport'
 Account = require('../models/account').Account;
 Playlist = require('../models/playlist').Playlist
+Track = require('../models/track').Track
 Getters = require './getter'
 
 module.exports = (app) ->
@@ -37,9 +38,22 @@ module.exports = (app) ->
 
   #TODO check is param user is the same as login user
   app.post '/data/:user/:playlist.json', (req, res) ->
+
     console.log('POST playlist ' + req.params.playlist + ' JSON object')
+
+    arr = []
+    for track in req.body.content.length by 1
+      arr.push new Track(track)
+
     newPlaylist = new Playlist(
-      #TODO populate...
+      title: req.body.title
+      id: req.body.id
+      owner: req.body.owner
+      editors: req.body.editors
+      visibility: req.body.visibility
+      content: arr
+      creationDate: req.body.creationDate
+      modificationDate: req.body.modificationDate
     )
     newPlaylist.save (err) ->
       unless err
@@ -88,7 +102,8 @@ module.exports = (app) ->
   app.post '/data/:user/info.json', (req, res) ->
     console.log('POST user info ' + req.params.playlist + ' JSON object')
     newAccount = new Account(
-      #TODO populate...
+      nickname: req.body.nickname
+      birthday: req.body.birthday
     )
     newAccount.save (err) ->
       unless err
@@ -133,23 +148,23 @@ module.exports = (app) ->
   app.get '/signup', (req, res) ->
     res.render 'signup',
       title: 'Disko'
-  
+
   app.post '/signup', (req, res) ->
     Account.register new Account(username: req.body.username), req.body.password, (err, account) ->
       if err
         res.render 'signup',
           info: "Sorry. That username already exists. Try again."
-  
+
       passport.authenticate 'local', (req, res) ->
         res.redirect '/'
-  
+
   app.get '/login', (req, res) ->
     res.render 'login',
       title: 'Disko'
-  
+
   app.post '/login', passport.authenticate 'local', (req, res) ->
     res.redirect '/'
-  
+
   app.get '/logout', (req, res) ->
     req.logout()
     res.redirect '/'
