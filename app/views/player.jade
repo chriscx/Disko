@@ -7,6 +7,7 @@ block append content
         h1 Playlist Name
         h4 by User
     br
+    link(href="css/player.css" rel="stylesheet" type="text/css")
     script(type='text/javascript').
       var DiskoApp = angular.module('DiskoApp', []);
 
@@ -18,6 +19,30 @@ block append content
           });
         });
         console.log($scope.playlist);
+      });
+
+      DiskoApp.controller('trackController', function($scope) {
+        $scope.addNewTrack = function() {
+          if($scope.newTrackUrl == undefined) {
+              console.log("BAD URL");
+              $("span.glyphicon").removeClass("hide glyphicon-ok").addClass("glyphicon-remove");
+              $("div.form-group.has-feedback").removeClass('has-success').addClass("has-error");
+            } else {
+              $.get('getter', {url: $scope.newTrackUrl}, function(answer) {
+                if(answer.code != 0) {
+                  $("span.glyphicon").removeClass("hide glyphicon-remove").addClass("glyphicon-ok");
+                  $("div.form-group.has-feedback").removeClass('has-error').addClass("has-success");
+                  console.log("URL OK: " + $scope.newTrackUrl);
+                  console.log(answer);
+                }
+                else {
+                  $("span.glyphicon").removeClass("hide glyphicon-remove").addClass("glyphicon-remove");
+                  $("div.form-group.has-feedback").removeClass('has-success').addClass("has-error");
+                  console.log("Error in URL");
+                }
+              });
+            }
+        };
       });
     .row
       .col-md-7
@@ -54,6 +79,21 @@ block append content
                     button.btn.btn-default(type='button')
                       span.glyphicon.glyphicon-share-alt
                       |  Fork
+        //bar to add a track to the playlist
+        .row(ng-controller='trackController')
+          .col-md-12
+            .panel.panel-default
+              .panel-body
+                h5 Add a song :
+                form.form-inline
+                  .col-sm-10
+                    div.form-group.has-feedback.full-width
+                      //c'est sale le CSS
+                      input.form-control(type="url" ng-model="newTrackUrl" placeholder="Paste url of the track ...")
+                      span.glyphicon.form-control-feedback.hide
+                  .col-sm-2
+                    button.btn.btn-default(ng-click="addNewTrack()") Add track
+
         .row
           .col-md-12
             //- div(ng-controller='playlistController')

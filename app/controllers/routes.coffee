@@ -65,5 +65,6 @@ module.exports = (app) ->
 
   app.get '/getter', (req, res) ->
     #here fix url before we have views to select one
-    Getters.dispatch 'https://soundcloud.com/chrome-sparks/goddess-1', (data) ->
+    console.log req.query.url
+    Getters.dispatch req.query.url, (data) ->
       res.send data
