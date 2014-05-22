@@ -29,16 +29,52 @@ module.exports = (app) ->
 
   app.get '/data/:user/:playlist.json', (req, res) ->
     console.log('GET playlist ' + req.params.playlist + ' JSON object')
-    Playlist.find {id: req.params.id}, (err, data) ->
+    Playlist.find {'id': req.params.id, 'owner': req.params.user}, (err, data) ->
       unless err
         res.json {result: 'OK', content: data}
       else
         res.json {result: 'error', content: null}
 
+  #TODO check is param user is the same as login user
+  app.post '/data/:user/:playlist.json', (req, res) ->
+    console.log('POST playlist ' + req.params.playlist + ' JSON object')
+    newPlaylist = new Playlist(
+      #TODO populate...
+    )
+    newPlaylist.save (err) ->
+      unless err
+        res.json result: 'OK'
+      else
+        res.json
+          result: 'error'
+          err: err
+
+  app.put '/data/:user/:playlist.json', (req, res) ->
+    console.log('PUT playlist ' + req.params.playlist + ' JSON object')
+    Playlist.findOneAndUpdate {'id': req.params.id, 'owner': req.params.user},
+      req.body,
+      new: true,
+        (err, data) ->
+          unless err
+            res.json result: 'OK'
+          else
+            res.json
+              result: 'error'
+              err: err
+
+  app.del '/data/:user/:playlist.json', (req, res) ->
+    console.log('DEL playlist ' + req.params.playlist + ' JSON object')
+    entry.remove {'id': req.params.id, 'owner': req.params.user}, (err, data) ->
+      if data > 0 and not err
+        res.json result: 'OK'
+      else
+        res.json
+          result: 'error'
+          err: err
 
   app.get '/:user', (req, res) ->
     console.log('GET user ' + req.params.playlist + 'view')
-    res.render 'player'
+    res.render 'user'
 
   # TODO add login check
   app.get '/data/:user/info.json', (req, res) ->
@@ -48,6 +84,42 @@ module.exports = (app) ->
         res.json {result: 'OK', content: data}
       else
         res.json {result: 'error', content: null}
+
+  app.post '/data/:user/info.json', (req, res) ->
+    console.log('POST user info ' + req.params.playlist + ' JSON object')
+    newAccount = new Account(
+      #TODO populate...
+    )
+    newAccount.save (err) ->
+      unless err
+        res.json result: 'OK'
+      else
+        res.json
+          result: 'error'
+          err: err
+
+  app.put '/data/:user/info.json', (req, res) ->
+    console.log('PUT user info ' + req.params.playlist + ' JSON object')
+    Account.findOneAndUpdate {'nickname': req.params.user},
+      req.body, # replace body by object with user info to not overwrite passport info
+      new: true,
+        (err, data) ->
+          unless err
+            res.json result: 'OK'
+          else
+            res.json
+              result: 'error'
+              err: err
+
+  app.del '/data/:user/info.json', (req, res) ->
+    console.log('DEL user info ' + req.params.playlist + ' JSON object')
+    Account.remove {'nickname': req.params.user}, (err, data) ->
+      if data > 0 and not err
+        res.json result: 'OK'
+      else
+        res.json
+          result: 'error'
+          err: err
 
   # DEV - TEMPORARY
   app.get '/data/playlists.json', (req, res) ->
