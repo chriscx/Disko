@@ -10,26 +10,120 @@ module.exports = (app) ->
     res.render 'index',
     title: 'Disko'
 
+  # DEV - TEMPORARY
   app.get '/player', (req, res) ->
     console.log('GET view player')
     res.render 'player',
     title: 'Disko'
 
+  # DEV - TEMPORARY
   app.get '/playlists', (req, res) ->
     console.log('GET view playlists')
     res.render 'playlists'
     title: 'Disko'
 
+  # if user is logged, use user login otherwise use a hash stored in cookie
+  app.get '/:user/:playlist', (req, res) ->
+    console.log('GET playlist ' + req.params.playlist + 'view')
+    res.render 'player'
+
   app.get '/data/:user/:playlist.json', (req, res) ->
     console.log('GET playlist ' + req.params.playlist + ' JSON object')
-    Playlist.find {id: req.params.id}, (err, data) ->
+    Playlist.find {'id': req.params.id, 'owner': req.params.user}, (err, data) ->
       unless err
         res.json {result: 'OK', content: data}
       else
         res.json {result: 'error', content: null}
 
+  #TODO check is param user is the same as login user
+  app.post '/data/:user/:playlist.json', (req, res) ->
+    console.log('POST playlist ' + req.params.playlist + ' JSON object')
+    newPlaylist = new Playlist(
+      #TODO populate...
+    )
+    newPlaylist.save (err) ->
+      unless err
+        res.json result: 'OK'
+      else
+        res.json
+          result: 'error'
+          err: err
+
+  app.put '/data/:user/:playlist.json', (req, res) ->
+    console.log('PUT playlist ' + req.params.playlist + ' JSON object')
+    Playlist.findOneAndUpdate {'id': req.params.id, 'owner': req.params.user},
+      req.body,
+      new: true,
+        (err, data) ->
+          unless err
+            res.json result: 'OK'
+          else
+            res.json
+              result: 'error'
+              err: err
+
+  app.del '/data/:user/:playlist.json', (req, res) ->
+    console.log('DEL playlist ' + req.params.playlist + ' JSON object')
+    entry.remove {'id': req.params.id, 'owner': req.params.user}, (err, data) ->
+      if data > 0 and not err
+        res.json result: 'OK'
+      else
+        res.json
+          result: 'error'
+          err: err
+
+  app.get '/:user', (req, res) ->
+    console.log('GET user ' + req.params.playlist + 'view')
+    res.render 'user'
+
+  # TODO add login check
+  app.get '/data/:user/info.json', (req, res) ->
+    console.log('GET user info ' + req.params.playlist + ' JSON object')
+    Account.find {nickname: req.params.user}, (err, data) ->
+      unless err or data.length < 1
+        res.json {result: 'OK', content: data}
+      else
+        res.json {result: 'error', content: null}
+
+  app.post '/data/:user/info.json', (req, res) ->
+    console.log('POST user info ' + req.params.playlist + ' JSON object')
+    newAccount = new Account(
+      #TODO populate...
+    )
+    newAccount.save (err) ->
+      unless err
+        res.json result: 'OK'
+      else
+        res.json
+          result: 'error'
+          err: err
+
+  app.put '/data/:user/info.json', (req, res) ->
+    console.log('PUT user info ' + req.params.playlist + ' JSON object')
+    Account.findOneAndUpdate {'nickname': req.params.user},
+      req.body, # replace body by object with user info to not overwrite passport info
+      new: true,
+        (err, data) ->
+          unless err
+            res.json result: 'OK'
+          else
+            res.json
+              result: 'error'
+              err: err
+
+  app.del '/data/:user/info.json', (req, res) ->
+    console.log('DEL user info ' + req.params.playlist + ' JSON object')
+    Account.remove {'nickname': req.params.user}, (err, data) ->
+      if data > 0 and not err
+        res.json result: 'OK'
+      else
+        res.json
+          result: 'error'
+          err: err
+
+  # DEV - TEMPORARY
   app.get '/data/playlists.json', (req, res) ->
-    console.log('GET playlist' + req.params.id + ' JSON object')
+    console.log('GET playlist ' + req.params.id + ' JSON object')
     Playlist.find {}, (err, data) ->
       if !err
         res.json {result: 'OK', content: data}
@@ -60,10 +154,20 @@ module.exports = (app) ->
     req.logout()
     res.redirect '/'
 
+  # just a ping to check if server is running
   app.get '/ping', (req, res) ->
     res.send 'pong!', 200
 
+  #TEMPORARY?
   app.get '/getter', (req, res) ->
     #here fix url before we have views to select one
-    Getters.dispatch 'https://soundcloud.com/chrome-sparks/goddess-1', (data) ->
+    console.log req.query.url
+    Getters.dispatch req.query.url, (data) ->
       res.send data
+
+  #
+  #     `error redirection page`
+  #    ----------------------------
+  #     :error param is error nb  (404,500...)
+  app.get '/error/:error', (req, res) ->
+    res.render 'error'

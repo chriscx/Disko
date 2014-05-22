@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800" rel="stylesheet" type="text/css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-    <body data-spy="scroll" data-target="#nav-scrollspy" style="background-style:url('http://interfacelift.com/wallpaper/Df0c8f48/03532_stairwaytoheaven_1440x900.jpg');">
-      <style type="text/css">body {
-  background-image: url("../..public/backgroung.jpg") no-repeat fixed center;
-}
-
-      </style>
+    <script src="http://yui.yahooapis.com/pure/0.4.2/pure-min.css"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <body data-spy="scroll" data-target="#nav-scrollspy">
+      <style type="text/css"></style>
     </body>
     <nav role="navigation" class="navbar navbar-default">
       <div class="container-fluid">
@@ -50,6 +50,7 @@
           <h4>by User</h4>
         </div>
       </div><br>
+      <link href="css/player.css" rel="stylesheet" type="text/css">
       <script type="text/javascript">
         var DiskoApp = angular.module('DiskoApp', []);
         
@@ -61,6 +62,30 @@
             });
           });
           console.log($scope.playlist);
+        });
+        
+        DiskoApp.controller('trackController', function($scope) {
+          $scope.addNewTrack = function() {
+            if($scope.newTrackUrl == undefined) {
+                console.log("BAD URL");
+                $("span.glyphicon").removeClass("hide glyphicon-ok").addClass("glyphicon-remove");
+                $("div.form-group.has-feedback").removeClass('has-success').addClass("has-error");
+            } else {
+                $.get('getter', {url: $scope.newTrackUrl}, function(answer) {
+                  if(answer.code != 0) {
+                    $("span.glyphicon").removeClass("hide glyphicon-remove").addClass("glyphicon-ok");
+                    $("div.form-group.has-feedback").removeClass('has-error').addClass("has-success");
+                    console.log("URL OK: " + $scope.newTrackUrl);
+                    console.log(answer);
+                  }
+                  else {
+                    $("span.glyphicon").removeClass("hide glyphicon-remove").addClass("glyphicon-remove");
+                    $("div.form-group.has-feedback").removeClass('has-success').addClass("has-error");
+                    console.log("Error in URL");
+                  }
+                });
+            }
+          };
         });
       </script>
       <div class="row">
@@ -91,6 +116,36 @@
               </div>
             </div>
           </div>
+          <div class="row hiden">
+            <div class="col-md-12">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <input type="url">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--bar to add a track to the playlist-->
+          <div ng-controller="trackController" class="row">
+            <div class="col-md-12">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <h5>Add a song :</h5>
+                  <form class="form-inline">
+                    <div class="col-sm-10">
+                      <div class="form-group has-feedback full-width">
+                        <!--c'est sale le CSS-->
+                        <input type="url" ng-model="newTrackUrl" placeholder="Paste url of the track ..." class="form-control"><span class="glyphicon form-control-feedback hide"></span>
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <button ng-click="addNewTrack()" class="btn btn-default">Add track</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-12">
               <div ng-controller="playlistController">
@@ -117,15 +172,15 @@
                 <h4>Playing : Artist - Title</h4>
               </div>
               <div class="panel-body">
-                <iframe width="100%" height="100" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/143859829&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;visual=false"></iframe>
+                <iframe width="100%" height="400" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/143859829&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;visual=false"></iframe>
               </div>
             </div>
           </div>
           <div class="row hide">
-            <iframe width="100%" height="100" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/5843667&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;visual=false"></iframe>
+            <iframe width="100%" height="400" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/5843667&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;visual=false"></iframe>
           </div>
           <div class="row hide">
-            <iframe width="100%" height="100" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/53371201&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;visual=false"></iframe>
+            <iframe width="100%" height="400" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/53371201&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;visual=false"></iframe>
           </div>
           <div class="row">
             <div class="panel panel-default">
@@ -164,8 +219,4 @@
       </div>
     </div>
   </head>
-  <script src="http://yui.yahooapis.com/pure/0.4.2/pure-min.css"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 </html>
