@@ -65,11 +65,6 @@ request_url = (url, callback) ->
     else
       callback response.body
 
-Track.prototype.other_infos = () ->
-  this.addedBy = "User1"
-  this.addedDate = new Date()
-  this.order = 1
-
 ### get the information from the responses and create objects to be stored in our DB ###
 infos_sc = (content, callback) ->
   track = new Track
@@ -78,8 +73,7 @@ infos_sc = (content, callback) ->
     url: content.uri
     src: "soundcloud"
     id: content.id
-  #adds the other infos for the saving in DB for the moment
-  track.other_infos()
+
   callback track
 
 infos_yt = (content, callback) ->
@@ -89,8 +83,7 @@ infos_yt = (content, callback) ->
   	url: "http://www.youtube.com/watch?v=" + content.id
   	src: "youtube"
   	id: content.id
-  #adds the other infos for the saving in DB for the moment
-  track.other_infos()
+
   callback track
 
 ### manages the actions of dispatching between the different sources ###

@@ -3,11 +3,11 @@ Schema = mongoose.Schema
 
 TrackSchema = new Schema(
   title: String
-  author: String
+  artist: String
   addedBy: String
   addedDate: String
-  url: String
-  src: String
+  url: String  #url added by user
+  src: String  #iframe url of track
   order: Number
 )
 
