@@ -6,22 +6,66 @@ Getters = require './getter'
 
 module.exports = (app) ->
 
-  app.get '/', (req, res) ->
-    console.log('GET view index')
-    res.render 'index',
-    title: 'Disko'
+################################################################################
+#                                                                              #
+#                            Routes for data                                   #
+#                                                                              #
+################################################################################
+
+  # TODO add login check
+  app.get '/data/:user/info.json', (req, res) ->
+    console.log('GET user info ' + req.params.playlist + ' JSON object')
+    Account.find {nickname: req.params.user}, (err, data) ->
+      unless err or data.length < 1
+        res.json {result: 'OK', content: data}
+      else
+        res.json {result: 'error', content: null}
+
+  app.post '/data/:user/info.json', (req, res) ->
+    console.log('POST user info ' + req.params.playlist + ' JSON object')
+    newAccount = new Account(
+      nickname: req.body.nickname
+      birthday: req.body.birthday
+    )
+    newAccount.save (err) ->
+      unless err
+        res.json result: 'OK'
+      else
+        res.json
+          result: 'error'
+          err: err
+
+  app.put '/data/:user/info.json', (req, res) ->
+    console.log('PUT user info ' + req.params.playlist + ' JSON object')
+    Account.findOneAndUpdate {'nickname': req.params.user},
+      req.body, # replace body by object with user info to not overwrite passport info
+      new: true,
+        (err, data) ->
+          unless err
+            res.json result: 'OK'
+          else
+            res.json
+              result: 'error'
+              err: err
+
+  app.del '/data/:user/info.json', (req, res) ->
+    console.log('DEL user info ' + req.params.playlist + ' JSON object')
+    Account.remove {'nickname': req.params.user}, (err, data) ->
+      if data > 0 and not err
+        res.json result: 'OK'
+      else
+        res.json
+          result: 'error'
+          err: err
 
   # DEV - TEMPORARY
-  app.get '/player', (req, res) ->
-    console.log('GET view player')
-    res.render 'player',
-    title: 'Disko'
-
-  # DEV - TEMPORARY
-  app.get '/playlists', (req, res) ->
-    console.log('GET view playlists')
-    res.render 'playlists'
-    title: 'Disko'
+  app.get '/data/playlists.json', (req, res) ->
+    console.log('GET playlist ' + req.params.id + ' JSON object')
+    Playlist.find {}, (err, data) ->
+      if !err
+        res.json {result: 'OK', content: data}
+      else
+        res.json {result: 'error', content: null}
 
   # if user is logged, use user login otherwise use a hash stored in cookie
   app.get '/:user/:playlist', (req, res) ->
@@ -86,71 +130,24 @@ module.exports = (app) ->
           result: 'error'
           err: err
 
+################################################################################
+#                                                                              #
+#                            Routes for views                                  #
+#                                                                              #
+################################################################################
+
   app.get '/:user', (req, res) ->
     console.log('GET user ' + req.params.playlist + 'view')
     res.render 'user'
-
-  # TODO add login check
-  app.get '/data/:user/info.json', (req, res) ->
-    console.log('GET user info ' + req.params.playlist + ' JSON object')
-    Account.find {nickname: req.params.user}, (err, data) ->
-      unless err or data.length < 1
-        res.json {result: 'OK', content: data}
-      else
-        res.json {result: 'error', content: null}
-
-  app.post '/data/:user/info.json', (req, res) ->
-    console.log('POST user info ' + req.params.playlist + ' JSON object')
-    newAccount = new Account(
-      nickname: req.body.nickname
-      birthday: req.body.birthday
-    )
-    newAccount.save (err) ->
-      unless err
-        res.json result: 'OK'
-      else
-        res.json
-          result: 'error'
-          err: err
-
-  app.put '/data/:user/info.json', (req, res) ->
-    console.log('PUT user info ' + req.params.playlist + ' JSON object')
-    Account.findOneAndUpdate {'nickname': req.params.user},
-      req.body, # replace body by object with user info to not overwrite passport info
-      new: true,
-        (err, data) ->
-          unless err
-            res.json result: 'OK'
-          else
-            res.json
-              result: 'error'
-              err: err
-
-  app.del '/data/:user/info.json', (req, res) ->
-    console.log('DEL user info ' + req.params.playlist + ' JSON object')
-    Account.remove {'nickname': req.params.user}, (err, data) ->
-      if data > 0 and not err
-        res.json result: 'OK'
-      else
-        res.json
-          result: 'error'
-          err: err
-
-  # DEV - TEMPORARY
-  app.get '/data/playlists.json', (req, res) ->
-    console.log('GET playlist ' + req.params.id + ' JSON object')
-    Playlist.find {}, (err, data) ->
-      if !err
-        res.json {result: 'OK', content: data}
-      else
-        res.json {result: 'error', content: null}
 
   app.get '/signup', (req, res) ->
     res.render 'signup',
       title: 'Disko'
 
   app.post '/signup', (req, res) ->
-    Account.register new Account(username: req.body.username), req.body.password, (err, account) ->
+    Account.register new Account(username: req.body.username),
+    req.body.password,
+    (err, account) ->
       if err
         res.render 'signup',
           info: "Sorry. That username already exists. Try again."
