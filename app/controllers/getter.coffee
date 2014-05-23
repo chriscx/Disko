@@ -8,7 +8,6 @@ sources =
   youtube:
     resolver: "https://www.googleapis.com/youtube/v3/videos?key="
     content: "&part=snippet&id="
-    #key: "AIzaSyAPNIZeQOkk7e519amM5raEUM__SOCml78"
     key: "AIzaSyCxL2W7WQKGQ_IKN9ug37rxeJm-Hr0t7Fw"
 
     documentation: "https://developers.google.com/youtube/v3/docs/videos?hl=fr"
