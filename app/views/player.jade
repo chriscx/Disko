@@ -12,7 +12,7 @@ block append content
 
       DiskoApp.controller('playlistController',function($scope) {
 
-        $.get('data/playlists.json', function(data) {
+        $.get('/data/playlists.json', function(data) {
           $scope.$apply(function(){
             $scope.playlist = data.content[0].content;
           });
@@ -89,7 +89,7 @@ block append content
                   .col-sm-10
                     div.form-group.has-feedback.full-width
                       //c'est sale le CSS
-                      input.form-control.full-width(type="url" ng-model="newTrackUrl" placeholder="Paste url of the track ..." width="100%")
+                      input.form-control(type="url" ng-model="newTrackUrl" placeholder="Paste url of the track ...")
                       span.glyphicon.form-control-feedback.hide.full-width
                   .col-sm-2
                     button.btn.btn-default(ng-click="addNewTrack()") Add track
