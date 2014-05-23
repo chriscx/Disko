@@ -104,7 +104,6 @@ dispatch = (track, callback) ->
       request_url url, (res) ->
         switch src
           when "youtube"
-            console.log res
             infos_yt JSON.parse(res).items[0], callback
           when "soundcloud"
             infos_sc JSON.parse(res), callback
