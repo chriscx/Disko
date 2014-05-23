@@ -128,7 +128,7 @@ module.exports = (app) ->
       else
         res.json
           result: 'error'
-          err: err
+          err: err 
 
 ################################################################################
 #                                                                              #

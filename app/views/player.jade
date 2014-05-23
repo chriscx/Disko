@@ -79,12 +79,6 @@ block append content
                     button.btn.btn-default(type='button')
                       span.glyphicon.glyphicon-share-alt
                       |  Fork
-                      
-        .row.hiden
-          .col-md-12
-            .panel.panel-default
-              .panel-body
-                input(type='url')
 
         //bar to add a track to the playlist
         .row(ng-controller='trackController')
@@ -96,8 +90,8 @@ block append content
                   .col-sm-10
                     div.form-group.has-feedback.full-width
                       //c'est sale le CSS
-                      input.form-control(type="url" ng-model="newTrackUrl" placeholder="Paste url of the track ...")
-                      span.glyphicon.form-control-feedback.hide
+                      input.form-control.full-width(type="url" ng-model="newTrackUrl" placeholder="Paste url of the track ...")
+                      span.glyphicon.form-control-feedback.hide.full-width
                   .col-sm-2
                     button.btn.btn-default(ng-click="addNewTrack()") Add track
 

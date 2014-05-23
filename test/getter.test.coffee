@@ -17,7 +17,7 @@ describe 'Getter', ->
         (res.title).should.be.eql 'Owl City & Carly Rae Jepsen - Good Time'
         done()
 
-  it 'gets Grooveshark track info', (done) ->
-      Getter.dispatch track_gs, (res) ->
-        (res.title).should.be.eql 'So Hard (feat. Monica Blaire)'
-        done()
+  # it 'gets Grooveshark track info', (done) ->
+  #     Getter.dispatch track_gs, (res) ->
+  #       (res.title).should.be.eql 'So Hard (feat. Monica Blaire)'
+  #       done()
