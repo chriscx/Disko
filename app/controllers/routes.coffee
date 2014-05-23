@@ -67,11 +67,6 @@ module.exports = (app) ->
       else
         res.json {result: 'error', content: null}
 
-  # if user is logged, use user login otherwise use a hash stored in cookie
-  app.get '/:user/:playlist', (req, res) ->
-    console.log('GET playlist ' + req.params.playlist + 'view')
-    res.render 'player'
-
   app.get '/data/:user/:playlist.json', (req, res) ->
     console.log('GET playlist ' + req.params.playlist + ' JSON object')
     Playlist.find {'id': req.params.id, 'owner': req.params.user}, (err, data) ->
@@ -136,10 +131,6 @@ module.exports = (app) ->
 #                                                                              #
 ################################################################################
 
-  app.get '/:user', (req, res) ->
-    console.log('GET user ' + req.params.playlist + 'view')
-    res.render 'user'
-
   app.get '/signup', (req, res) ->
     res.render 'signup',
       title: 'Disko'
@@ -183,3 +174,12 @@ module.exports = (app) ->
   #     :error param is error nb  (404,500...)
   app.get '/error/:error', (req, res) ->
     res.render 'error'
+
+  app.get '/:user', (req, res) ->
+    console.log('GET user ' + req.params.playlist + 'view')
+    res.render 'user'
+
+  # if user is logged, use user login otherwise use a hash stored in cookie
+  app.get '/:user/:playlist', (req, res) ->
+    console.log('GET playlist ' + req.params.playlist + 'view')
+    res.render 'player'
