@@ -87,7 +87,6 @@ dispatch = (track, callback) ->
             else
               infos_yt JSON.parse(res).items[0], callback
           when "soundcloud"
-            console.log (url).red
             parsed = JSON.parse(res)
             if(parsed.kind == 'track')
               infos_sc JSON.parse(res), callback
