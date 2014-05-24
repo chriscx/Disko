@@ -3,7 +3,7 @@
   <head>
     <title>Disko</title>
     <!--favicon-->
-    <link rel="icon" type="image/png" href="/public/myicon.png">
+    <link rel="icon" type="image/png" href="/public/icon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800" rel="stylesheet" type="text/css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
@@ -63,61 +63,62 @@
         
           $.get('/data/playlists.json', function(data) {
             $scope.$apply(function(){
+              $scope.playlist_name = data.content[0].id;
               $scope.playlist = data.content[0].content;
             });
           });
           console.log($scope.playlist);
-        });
-        
-        DiskoApp.controller('trackController', function($scope) {
+          
           $scope.addNewTrack = function() {
-            $("div.form-group.has-feedback").removeClass('has-error has-success')
-            $("span.glyphicon").removeClass("glyphicon-ok glyphicon-remove")
+            console.log("PL Name: " + $scope.playlist_name);
+            //toastr options -> put in another file ?
+            toastr.options = {
+              "closeButton": false,
+              "debug": false,
+              "positionClass": "toast-top-right",
+              "onclick": null,
+              "showDuration": "300",
+              "hideDuration": "700",
+              "timeOut": "3000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            }
+            $("div.form-group.has-feedback").removeClass('has-error has-success');
+            $("span.glyphicon").removeClass("glyphicon-ok glyphicon-remove");
             if($scope.newTrackUrl == undefined) {
                 console.log("BAD URL");
                 $("span.glyphicon").removeClass("hide").addClass("glyphicon-remove");
                 $("div.form-group.has-feedback").addClass("has-error");
             } else {
-                $.get('/getter', {url: $scope.newTrackUrl}, function(answer) {
-                  if(answer.code != 0) {
-                    toastr.options.onHidden = function() { 
-                      $("span.glyphicon.form-control-feedback").addClass("hide"); 
-                      $("div.form-group.has-feedback").removeClass("has-success");
-                      $scope.$apply(function() {
-                        $scope.newTrackUrl = null;
-                      });
-                    };
-                    toastr.options = {
-                      "closeButton": false,
-                      "debug": false,
-                      "positionClass": "toast-top-right",
-                      "onclick": null,
-                      "showDuration": "300",
-                      "hideDuration": "700",
-                      "timeOut": "3000",
-                      "extendedTimeOut": "1000",
-                      "showEasing": "swing",
-                      "hideEasing": "linear",
-                      "showMethod": "fadeIn",
-                      "hideMethod": "fadeOut"
-                    }
-                    toastr.success('Track added to the playlist');
-                    $("span.glyphicon").removeClass("hide").addClass("glyphicon-ok");
-                    $("div.form-group.has-feedback").addClass("has-success");
-                    console.log("URL OK: " + $scope.newTrackUrl);
-                    console.log(answer);
-                  }
-                  else {
-                    $("span.glyphicon").removeClass("hide").addClass("glyphicon-remove");
-                    $("div.form-group.has-feedback").addClass("has-error");
-                    console.log("Error in URL");
-                  }
-                });
+              $.get('/data/getter/' + $scope.playlist_name, {url: $scope.newTrackUrl}, function(answer) {
+                if(answer.code != 0) {
+                  toastr.options.onHidden = function() { 
+                    $("span.glyphicon.form-control-feedback").addClass("hide"); 
+                    $("div.form-group.has-feedback").removeClass("has-success");
+                    $scope.$apply(function() {
+                      $scope.newTrackUrl = null;
+                    });
+                  };
+                  toastr.success('Track added to the playlist');
+                  $("span.glyphicon").removeClass("hide").addClass("glyphicon-ok");
+                  $("div.form-group.has-feedback").addClass("has-success");
+                  console.log("URL OK: " + $scope.newTrackUrl);
+                  console.log(answer);
+                }
+                else {
+                  $("span.glyphicon").removeClass("hide").addClass("glyphicon-remove");
+                  $("div.form-group.has-feedback").addClass("has-error");
+                  console.log("Error in URL");
+                }
+              });
             }
           };
         });
       </script>
-      <div class="row">
+      <div ng-controller="playlistController" class="row">
         <div class="col-md-7">
           <div class="row">
             <div class="col-md-12">
@@ -145,8 +146,7 @@
               </div>
             </div>
           </div>
-          <!--bar to add a track to the playlist-->
-          <div ng-controller="trackController" class="row">
+          <div class="row">
             <div class="col-md-12">
               <div class="panel panel-default">
                 <div class="panel-body">
@@ -154,7 +154,6 @@
                   <form class="form-inline">
                     <div class="col-sm-10">
                       <div class="form-group has-feedback full-width">
-                        <!--c'est sale le CSS-->
                         <input type="url" ng-model="newTrackUrl" placeholder="Paste url of the track ..." class="form-control"><span class="glyphicon form-control-feedback hide full-width"></span>
                       </div>
                     </div>
@@ -168,7 +167,7 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <div ng-controller="playlistController">
+              <div>
                 <table class="table table-hover">
                   <tr>
                     <th>Song</th>

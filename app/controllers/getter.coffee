@@ -47,6 +47,11 @@ infos_sc = (content, callback) ->
     src: "soundcloud"
     id: content.id
 
+  track.save (error) ->
+    if error
+      console.log "error" + error.message
+    else
+      console.log "no error"
   callback track
 
 infos_yt = (content, callback) ->
@@ -56,11 +61,14 @@ infos_yt = (content, callback) ->
   	url: "http://www.youtube.com/watch?v=" + content.id
   	src: "youtube"
   	id: content.id
-
+  console.log track
   callback track
 
 ### manages the actions of dispatching between the different sources ###
-dispatch = (track, callback) ->
+dispatch = (track, playlist, callback) ->
+  console.log 'tr: ' + track
+  console.log 'pl : ' + playlist
+  console.log 'cb: ' + callback
   get_source track, (src) ->
   	url = null
   	switch src

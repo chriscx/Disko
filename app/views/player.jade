@@ -14,14 +14,14 @@ block append content
 
         $.get('/data/playlists.json', function(data) {
           $scope.$apply(function(){
+            $scope.playlist_name = data.content[0].id;
             $scope.playlist = data.content[0].content;
           });
         });
         console.log($scope.playlist);
-      });
 
-      DiskoApp.controller('trackController', function($scope) {
         $scope.addNewTrack = function() {
+          console.log("PL Name: " + $scope.playlist_name);
           //toastr options -> put in another file ?
           toastr.options = {
             "closeButton": false,
@@ -44,7 +44,7 @@ block append content
               $("span.glyphicon").removeClass("hide").addClass("glyphicon-remove");
               $("div.form-group.has-feedback").addClass("has-error");
           } else {
-            $.get('/getter', {url: $scope.newTrackUrl}, function(answer) {
+            $.get('/data/getter/' + $scope.playlist_name, {url: $scope.newTrackUrl}, function(answer) {
               if(answer.code != 0) {
                 toastr.options.onHidden = function() { 
                   $("span.glyphicon.form-control-feedback").addClass("hide"); 
@@ -68,7 +68,7 @@ block append content
           }
         };
       });
-    .row
+    .row(ng-controller='playlistController')
       .col-md-7
         .row
           .col-md-12
@@ -104,8 +104,7 @@ block append content
                       span.glyphicon.glyphicon-share-alt
                       |  Fork
 
-        //bar to add a track to the playlist
-        .row(ng-controller='trackController')
+        .row
           .col-md-12
             .panel.panel-default
               .panel-body
@@ -113,7 +112,6 @@ block append content
                 form.form-inline
                   .col-sm-10
                     div.form-group.has-feedback.full-width
-                      //c'est sale le CSS
                       input.form-control(type="url" ng-model="newTrackUrl" placeholder="Paste url of the track ...")
                       span.glyphicon.form-control-feedback.hide.full-width
                   .col-sm-2
@@ -129,8 +127,7 @@ block append content
             //-         p {{item.author}}
             //-         p {{item.title}}
             //-         span.inline.right 3.10
-
-            div(ng-controller='playlistController')
+            div
               table.table.table-hover
                 tr
                   //- th

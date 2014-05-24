@@ -138,6 +138,11 @@ module.exports = (app) ->
           result: 'error'
           err: err
 
+  app.get '/data/getter/:playlist', (req, res) ->
+    console.log (req.query.url + ' in ' + req.params.playlist).white
+    #adding playlist id for saving track in it
+    Getters.dispatch req.query.url, req.params.playlist, (data) ->
+      res.send data
 ################################################################################
 #                                                                              #
 #                            Routes for views                                  #
@@ -173,13 +178,6 @@ module.exports = (app) ->
   # just a ping to check if server is running
   app.get '/ping', (req, res) ->
     res.send 'pong!', 200
-
-  #TEMPORARY?
-  app.get '/getter', (req, res) ->
-    #here fix url before we have views to select one
-    console.log req.query.url
-    Getters.dispatch req.query.url, (data) ->
-      res.send data
 
   #
   #     `error redirection page`
