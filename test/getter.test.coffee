@@ -8,12 +8,12 @@ track_yt = "https://www.youtube.com/watch?v=H7HmzwI67ec"
 describe 'Getter', ->
 
   it 'gets Soundcloud track info', (done) ->
-    Getter.dispatch track_sc, (res) ->
+    Getter.dispatch track_sc, '42', (res) ->
       (res.title).should.be.eql 'goddess'
       done()
 
   it 'gets Youtube track info', (done) ->
-      Getter.dispatch track_yt, (res) ->
+      Getter.dispatch track_yt, '42', (res) ->
         (res.title).should.be.eql 'Owl City & Carly Rae Jepsen - Good Time'
         done()
 
