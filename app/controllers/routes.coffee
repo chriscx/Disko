@@ -1,3 +1,4 @@
+path = require 'path'
 passport = require 'passport'
 Account = require('../models/account').Account;
 Playlist = require('../models/playlist').Playlist
@@ -176,10 +177,22 @@ module.exports = (app) ->
     res.render 'error'
 
   app.get '/:user', (req, res) ->
-    console.log('GET user ' + req.params.playlist + 'view')
-    res.render 'player'
+    console.log('GET user ' + req.params.playlist + ' view')
+    res.render 'user'
 
   # if user is logged, use user login otherwise use a hash stored in cookie
   app.get '/:user/:playlist', (req, res) ->
-    console.log('GET playlist ' + req.params.playlist + 'view')
+    console.log('GET playlist ' + req.params.playlist + ' view')
     res.render 'player'
+
+################################################################################
+#                                                                              #
+#                            Routes for static files                           #
+#                                                                              #
+################################################################################
+
+#CSS
+  app.get '/static/css/:file', (req, res) ->
+    file = req.params.file
+    dir = (path.resolve '#{__dirname}/../public/css/') + '/'
+    res.sendfile dir + file

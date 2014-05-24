@@ -96,7 +96,7 @@ dispatch = (track, callback) ->
         s = s[1].split("&")
         track = s[0]
   	  when "soundcloud"
-  	  else 
+  	  else
         console.log "SOURCE NOT SUPPORTED YET".red
         stop = true
     unless stop
@@ -104,7 +104,6 @@ dispatch = (track, callback) ->
       request_url url, (res) ->
         switch src
           when "youtube"
-            console.log res
             infos_yt JSON.parse(res).items[0], callback
           when "soundcloud"
             infos_sc JSON.parse(res), callback
