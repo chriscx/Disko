@@ -139,8 +139,7 @@ module.exports = (app) ->
           err: err
 
   app.get '/data/getter/:playlist', (req, res) ->
-    console.log  "here"
-    console.log (req.query.url + ' in ' + req.params.playlist).white
+    #console.log (req.query.url + ' in ' + req.params.playlist).white
     #adding playlist id for saving track in it
     Getters.dispatch req.query.url, req.params.playlist, (data) ->
       res.send data
