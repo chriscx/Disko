@@ -9,6 +9,18 @@ module.exports = (app) ->
 
 ################################################################################
 #                                                                              #
+#                            Routes for static files                           #
+#                                                                              #
+################################################################################
+
+  app.get /^\/static(\/.+)/, (req, res) ->
+    file = req.params[0]
+    dir = (path.resolve '#{__dirname}/../public/') + '/'
+    console.log 'GET static ' + dir + file
+    res.sendfile dir + file
+
+################################################################################
+#                                                                              #
 #                            Routes for data                                   #
 #                                                                              #
 ################################################################################
@@ -184,15 +196,3 @@ module.exports = (app) ->
   app.get '/:user/:playlist', (req, res) ->
     console.log('GET playlist ' + req.params.playlist + ' view')
     res.render 'player'
-
-################################################################################
-#                                                                              #
-#                            Routes for static files                           #
-#                                                                              #
-################################################################################
-
-#CSS
-  app.get '/static/css/:file', (req, res) ->
-    file = req.params.file
-    dir = (path.resolve '#{__dirname}/../public/css/') + '/'
-    res.sendfile dir + file
