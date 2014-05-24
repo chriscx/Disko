@@ -67,8 +67,11 @@ dispatch = (track, callback) ->
   	  when "youtube"
   	    # to isolate the video id
         s = track.split("v=")
-        s = s[1].split("&")
-        track = s[0]
+        if(s[1])
+          s = s[1].split("&")
+          track = s[0]
+        else 
+          stop = true
   	  when "soundcloud"
   	  else
         console.log "SOURCE NOT SUPPORTED YET".red
@@ -78,9 +81,18 @@ dispatch = (track, callback) ->
       request_url url, (res) ->
         switch src
           when "youtube"
-            infos_yt JSON.parse(res).items[0], callback
+            parsed = JSON.parse(res)
+            if(parsed.pageInfo.totalResults == 0)
+              callback {code: 0}
+            else
+              infos_yt JSON.parse(res).items[0], callback
           when "soundcloud"
-            infos_sc JSON.parse(res), callback
+            console.log (url).red
+            parsed = JSON.parse(res)
+            if(parsed.kind == 'track')
+              infos_sc JSON.parse(res), callback
+            else 
+              callback {code: 0}
     else
       callback {code: 0}
 

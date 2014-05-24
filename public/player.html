@@ -2,6 +2,8 @@
 <html ng-app="DiskoApp">
   <head>
     <title>Disko</title>
+    <!--favicon-->
+    <link rel="icon" type="image/png" href="/public/myicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800" rel="stylesheet" type="text/css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
@@ -10,6 +12,9 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <!--NOTIFICATIONS-->
+    <script src="/static/js/toastr.js"></script>
+    <link href="/static/css/toastr.css" type="text/css" rel="stylesheet">
     <body data-spy="scroll" data-target="#nav-scrollspy">
       <style type="text/css"></style>
     </body>
@@ -66,21 +71,45 @@
         
         DiskoApp.controller('trackController', function($scope) {
           $scope.addNewTrack = function() {
+            $("div.form-group.has-feedback").removeClass('has-error has-success')
+            $("span.glyphicon").removeClass("glyphicon-ok glyphicon-remove")
             if($scope.newTrackUrl == undefined) {
                 console.log("BAD URL");
-                $("span.glyphicon").removeClass("hide glyphicon-ok").addClass("glyphicon-remove");
-                $("div.form-group.has-feedback").removeClass('has-success').addClass("has-error");
+                $("span.glyphicon").removeClass("hide").addClass("glyphicon-remove");
+                $("div.form-group.has-feedback").addClass("has-error");
             } else {
-                $.get('getter', {url: $scope.newTrackUrl}, function(answer) {
+                $.get('/getter', {url: $scope.newTrackUrl}, function(answer) {
                   if(answer.code != 0) {
-                    $("span.glyphicon").removeClass("hide glyphicon-remove").addClass("glyphicon-ok");
-                    $("div.form-group.has-feedback").removeClass('has-error').addClass("has-success");
+                    toastr.options.onHidden = function() { 
+                      $("span.glyphicon.form-control-feedback").addClass("hide"); 
+                      $("div.form-group.has-feedback").removeClass("has-success");
+                      $scope.$apply(function() {
+                        $scope.newTrackUrl = null;
+                      });
+                    };
+                    toastr.options = {
+                      "closeButton": false,
+                      "debug": false,
+                      "positionClass": "toast-top-right",
+                      "onclick": null,
+                      "showDuration": "300",
+                      "hideDuration": "700",
+                      "timeOut": "3000",
+                      "extendedTimeOut": "1000",
+                      "showEasing": "swing",
+                      "hideEasing": "linear",
+                      "showMethod": "fadeIn",
+                      "hideMethod": "fadeOut"
+                    }
+                    toastr.success('Track added to the playlist');
+                    $("span.glyphicon").removeClass("hide").addClass("glyphicon-ok");
+                    $("div.form-group.has-feedback").addClass("has-success");
                     console.log("URL OK: " + $scope.newTrackUrl);
                     console.log(answer);
                   }
                   else {
-                    $("span.glyphicon").removeClass("hide glyphicon-remove").addClass("glyphicon-remove");
-                    $("div.form-group.has-feedback").removeClass('has-success').addClass("has-error");
+                    $("span.glyphicon").removeClass("hide").addClass("glyphicon-remove");
+                    $("div.form-group.has-feedback").addClass("has-error");
                     console.log("Error in URL");
                   }
                 });
@@ -163,7 +192,7 @@
                 <h4>Playing : Artist - Title</h4>
               </div>
               <div class="panel-body">
-                <iframe width="100%" height="400" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/143859829&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;visual=true"></iframe>
+                <iframe width="100%" height="400" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/94324263&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;visual=true"></iframe>
               </div>
             </div>
           </div>
