@@ -61,14 +61,10 @@ infos_yt = (content, callback) ->
   	url: "http://www.youtube.com/watch?v=" + content.id
   	src: "youtube"
   	id: content.id
-  console.log track
   callback track
 
 ### manages the actions of dispatching between the different sources ###
 dispatch = (track, playlist, callback) ->
-  console.log 'tr: ' + track
-  console.log 'pl : ' + playlist
-  console.log 'cb: ' + callback
   get_source track, (src) ->
   	url = null
   	switch src
