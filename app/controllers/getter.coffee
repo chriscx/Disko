@@ -18,33 +18,7 @@ sources =
     key: "b45b1aa10f1ac2941910a7f0d10f8e28"
 
     documentation: "https://developers.soundcloud.com/docs/api/reference"
-
-  grooveshark:
-    resolver: ""
-    content: ""
-    key: ""
-
-    documentation: "http://developers.grooveshark.com/docs/public_api/v3/"
-
-  spotify:
-    resolver: ""
-    content: ""
-    key: ""
-
-    documentation: ""
-
-  deezer:
-    resolver: ""
-    content: ""
-    key: ""
-
-    documentation: ""
-
-track_sc = "https://soundcloud.com/chrome-sparks/goddess-1"
-track_gs = "http://grooveshark.com/#!/s/So+Hard+feat+Monica+Blaire/uA4MV?src=5"
-full_track_yt = "http://www.youtube.com/watch?v=dR9GRK9vrlU"
-play_track_yt = "https://www.youtube.com/watch?v=1JeLoOhnlTk&list=PLgx9GuZnpLj9PLAs-WFdPI_PHtxBRzppK"
-
+    
 ### find from which site is the video ###
 get_source = (track, callback) ->
   for index of sources
