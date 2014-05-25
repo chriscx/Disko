@@ -5,7 +5,7 @@ Account = require('../app/models/account').Account
 describe 'Account', ->
   before (done) ->
     unless mongoose.connection.readyState
-      mongoose.connect 'mongodb://localhost/fluiddb_dev', null, ->
+      mongoose.connect 'mongodb://localhost/disko_dev', null, ->
         done()
 
   after (done) ->

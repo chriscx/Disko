@@ -188,7 +188,7 @@ module.exports = (app) ->
 
   app.get '/:user', (req, res) ->
     console.log('GET user ' + req.params.playlist + ' view')
-    res.render 'user'
+    res.render 'player'
 
   # if user is logged, use user login otherwise use a hash stored in cookie
   app.get '/:user/:playlist', (req, res) ->
