@@ -4,6 +4,7 @@ Account = require('../models/account').Account;
 Playlist = require('../models/playlist').Playlist
 Track = require('../models/track').Track
 Getters = require './getter'
+Saver = require './saving_track'
 
 module.exports = (app) ->
 
@@ -76,6 +77,7 @@ module.exports = (app) ->
     console.log('GET playlist ' + req.params.id + ' JSON object')
     Playlist.find {}, (err, data) ->
       if !err
+        console.log data
         res.json {result: 'OK', content: data}
       else
         res.json {result: 'error', content: null}
@@ -138,10 +140,9 @@ module.exports = (app) ->
           result: 'error'
           err: err
 
+  #route DEV
   app.get '/data/getter/:playlist', (req, res) ->
-    #console.log (req.query.url + ' in ' + req.params.playlist).white
-    #adding playlist id for saving track in it
-    Getters.dispatch req.query.url, req.params.playlist, (data) ->
+    Getters.dispatch req.query.url, (data) ->
       res.send data
 ################################################################################
 #                                                                              #

@@ -7,67 +7,8 @@ block append content
         h1 Playlist Name
         h4 by User
     br
-    script(type='text/javascript').
-      var DiskoApp = angular.module('DiskoApp', []);
-
-      DiskoApp.controller('playlistController',function($scope) {
-
-        $.get('/data/playlists.json', function(data) {
-          $scope.$apply(function(){
-            $scope.playlist_name = data.content[0].id;
-            $scope.playlist = data.content[0].content;
-          });
-        });
-        console.log($scope.playlist);
-
-        $scope.addNewTrack = function() {
-          console.log("PL Name: " + $scope.playlist_name);
-          //toastr options -> put in another file ?
-          toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "positionClass": "toast-top-right",
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "700",
-            "timeOut": "3000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-          }
-          $("div.form-group.has-feedback").removeClass('has-error has-success');
-          $("span.glyphicon").removeClass("glyphicon-ok glyphicon-remove");
-          if($scope.newTrackUrl == undefined) {
-              console.log("BAD URL");
-              $("span.glyphicon").removeClass("hide").addClass("glyphicon-remove");
-              $("div.form-group.has-feedback").addClass("has-error");
-          } else {
-            $.get('/data/getter/' + $scope.playlist_name, {url: $scope.newTrackUrl}, function(answer) {
-              if(answer.code != 0) {
-                toastr.options.onHidden = function() { 
-                  $("span.glyphicon.form-control-feedback").addClass("hide"); 
-                  $("div.form-group.has-feedback").removeClass("has-success");
-                  $scope.$apply(function() {
-                    $scope.newTrackUrl = null;
-                  });
-                };
-                toastr.success('Track added to the playlist');
-                $("span.glyphicon").removeClass("hide").addClass("glyphicon-ok");
-                $("div.form-group.has-feedback").addClass("has-success");
-                console.log("URL OK: " + $scope.newTrackUrl);
-                console.log(answer);
-              }
-              else {
-                $("span.glyphicon").removeClass("hide").addClass("glyphicon-remove");
-                $("div.form-group.has-feedback").addClass("has-error");
-                console.log("Error in URL");
-              }
-            });
-          }
-        };
-      });
+    script(type='text/javascript' src="/static/js/track_mgmt.js")
+      
     .row(ng-controller='playlistController')
       .col-md-7
         .row
@@ -137,12 +78,12 @@ block append content
                   //- th Added Date
                   //- th url
                   th source
-                tr(ng-repeat='item in playlist | orderBy:sortingOrder:reverse')
+                tr(ng-repeat='item in playlist.content | orderBy:sortingOrder:reverse')
                   //- td
                   //-   button.btn(type='button')
                   //-     span.glyphicon.glyphicon-play
                   td
-                    a  {{item.title}} - {{item.author}}
+                    a  {{item.title}} - {{item.artist}}
                   td.
                     3:10
                   //- td {{item.addedBy}}
@@ -150,6 +91,9 @@ block append content
                   //- td {{item.url}}
                   td
                     a(href='{{item.url}}') {{item.src}}
+              button.btn.btn-success.pull-right(type="button" ng-click="savePlaylist()") 
+                span.glyphicon.glyphicon-ok  Save
+
       .col-md-5
         //- .row
         //-   object#gsSong2737846533(width='100%', height='40', classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000', name='gsSong2737846533')
