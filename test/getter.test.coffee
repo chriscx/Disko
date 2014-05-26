@@ -1,7 +1,6 @@
 should = require 'should'
 Getter = require '../app/controllers/getter'
 track_sc = "https://soundcloud.com/chrome-sparks/goddess-1"
-track_gs = "http://grooveshark.com/#!/s/So+Hard+feat+Monica+Blaire/uA4MV?src=5"
 track_yt = "https://www.youtube.com/watch?v=H7HmzwI67ec"
 
 
@@ -15,9 +14,4 @@ describe 'Getter', ->
   it 'gets Youtube track info', (done) ->
       Getter.dispatch track_yt, (res) ->
         (res.title).should.be.eql 'Owl City & Carly Rae Jepsen - Good Time'
-        done()
-
-  it 'gets Grooveshark track info', (done) ->
-      Getter.dispatch track_gs, (res) ->
-        (res.title).should.be.eql 'So Hard (feat. Monica Blaire)'
         done()

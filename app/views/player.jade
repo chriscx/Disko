@@ -7,44 +7,9 @@ block append content
         h1 Playlist Name
         h4 by User
     br
-    link(href="css/player.css" rel="stylesheet" type="text/css")
-    script(type='text/javascript').
-      var DiskoApp = angular.module('DiskoApp', []);
+    script(type='text/javascript' src="/static/js/track_mgmt.js")
 
-      DiskoApp.controller('playlistController',function($scope) {
-
-        $.get('data/playlists.json', function(data) {
-          $scope.$apply(function(){
-            $scope.playlist = data.content[0].content;
-          });
-        });
-        console.log($scope.playlist);
-      });
-
-      DiskoApp.controller('trackController', function($scope) {
-        $scope.addNewTrack = function() {
-          if($scope.newTrackUrl == undefined) {
-              console.log("BAD URL");
-              $("span.glyphicon").removeClass("hide glyphicon-ok").addClass("glyphicon-remove");
-              $("div.form-group.has-feedback").removeClass('has-success').addClass("has-error");
-            } else {
-              $.get('getter', {url: $scope.newTrackUrl}, function(answer) {
-                if(answer.code != 0) {
-                  $("span.glyphicon").removeClass("hide glyphicon-remove").addClass("glyphicon-ok");
-                  $("div.form-group.has-feedback").removeClass('has-error').addClass("has-success");
-                  console.log("URL OK: " + $scope.newTrackUrl);
-                  console.log(answer);
-                }
-                else {
-                  $("span.glyphicon").removeClass("hide glyphicon-remove").addClass("glyphicon-remove");
-                  $("div.form-group.has-feedback").removeClass('has-success').addClass("has-error");
-                  console.log("Error in URL");
-                }
-              });
-            }
-        };
-      });
-    .row
+    .row(ng-controller='playlistController')
       .col-md-7
         .row
           .col-md-12
@@ -79,15 +44,8 @@ block append content
                     button.btn.btn-default(type='button')
                       span.glyphicon.glyphicon-share-alt
                       |  Fork
-                      
-        .row.hiden
-          .col-md-12
-            .panel.panel-default
-              .panel-body
-                input(type='url')
 
-        //bar to add a track to the playlist
-        .row(ng-controller='trackController')
+        .row
           .col-md-12
             .panel.panel-default
               .panel-body
@@ -95,9 +53,8 @@ block append content
                 form.form-inline
                   .col-sm-10
                     div.form-group.has-feedback.full-width
-                      //c'est sale le CSS
                       input.form-control(type="url" ng-model="newTrackUrl" placeholder="Paste url of the track ...")
-                      span.glyphicon.form-control-feedback.hide
+                      span.glyphicon.form-control-feedback.hide.full-width
                   .col-sm-2
                     button.btn.btn-default(ng-click="addNewTrack()") Add track
 
@@ -111,8 +68,7 @@ block append content
             //-         p {{item.author}}
             //-         p {{item.title}}
             //-         span.inline.right 3.10
-
-            div(ng-controller='playlistController')
+            div
               table.table.table-hover
                 tr
                   //- th
@@ -122,12 +78,12 @@ block append content
                   //- th Added Date
                   //- th url
                   th source
-                tr(ng-repeat='item in playlist | orderBy:sortingOrder:reverse')
+                tr(ng-repeat='item in playlist.content | orderBy:sortingOrder:reverse')
                   //- td
                   //-   button.btn(type='button')
                   //-     span.glyphicon.glyphicon-play
                   td
-                    a  {{item.title}} - {{item.author}}
+                    a  {{item.title}} - {{item.artist}}
                   td.
                     3:10
                   //- td {{item.addedBy}}
@@ -135,6 +91,9 @@ block append content
                   //- td {{item.url}}
                   td
                     a(href='{{item.url}}') {{item.src}}
+              button.btn.btn-success.pull-right(type="button" ng-click="savePlaylist()")
+                span.glyphicon.glyphicon-ok  Save
+
       .col-md-5
         //- .row
         //-   object#gsSong2737846533(width='100%', height='40', classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000', name='gsSong2737846533')
@@ -153,11 +112,11 @@ block append content
             .panel-heading
               h4 Playing : Artist - Title
             .panel-body
-              iframe(width="100%" height="400" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/143859829&amp;auto_play=false&amp;hide_related=false&amp;visual=false")
+              iframe(width="100%" height="400" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/94324263&amp;auto_play=false&amp;hide_related=false&amp;visual=true")
         .row.hide
-          iframe(width="100%" height="400" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/5843667&amp;auto_play=false&amp;hide_related=false&amp;visual=false")
+          iframe(width="100%" height="400" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/5843667&amp;auto_play=false&amp;hide_related=false&amp;visual=true")
         .row.hide
-          iframe(width="100%" height="400" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/53371201&amp;auto_play=false&amp;hide_related=false&amp;visual=false")
+          iframe(width="100%" height="400" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/53371201&amp;auto_play=false&amp;hide_related=false&amp;visual=true")
         .row
           .panel.panel-default
             .panel-heading
