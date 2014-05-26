@@ -1,8 +1,8 @@
 #dependencies
 request = require 'request'
 colors = require 'colors'
-mongoose = require 'mongoose'
 Track = require('../models/track').Track
+Playlist = require('../models/playlist').Playlist
 
 sources =
   youtube:
@@ -38,33 +38,25 @@ request_url = (url, callback) ->
     else
       callback response.body
 
+infos_yt = (content, callback) ->
+  track =  new Track
+    title: content.snippet.title
+    artist: content.snippet.channelTitle
+    url: "http://www.youtube.com/watch?v=" + content.id
+    src: content.id
+  callback track
+
 ### get the information from the responses and create objects to be stored in our DB ###
 infos_sc = (content, callback) ->
   track = new Track
     title: content.title
-    author: content.user.username
-    url: content.uri
-    src: "soundcloud"
-    id: content.id
-
-  track.save (error) ->
-    if error
-      console.log "error" + error.message
-    else
-      console.log "no error"
-  callback track
-
-infos_yt = (content, callback) ->
-  track =  new Track
-  	title: content.snippet.title
-  	author: content.snippet.channelTitle
-  	url: "http://www.youtube.com/watch?v=" + content.id
-  	src: "youtube"
-  	id: content.id
+    artist: content.user.username
+    url: content.permalink_url
+    src: content.id
   callback track
 
 ### manages the actions of dispatching between the different sources ###
-dispatch = (track, playlist, callback) ->
+dispatch = (track, callback) ->
   get_source track, (src) ->
   	url = null
   	switch src
