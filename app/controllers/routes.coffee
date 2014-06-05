@@ -4,7 +4,6 @@ Account = require('../models/account').Account;
 Playlist = require('../models/playlist').Playlist
 Track = require('../models/track').Track
 Getters = require './getter'
-Saver = require './saving_track'
 
 module.exports = (app) ->
 
