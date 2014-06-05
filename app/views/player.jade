@@ -4,8 +4,8 @@ block append content
   .container
     .row
       .col-md-8
-        h1 Playlist Name
-        h4 by User
+        h1 {{Playlist Name}}
+        h4 by {{User}}
     br
     script(type='text/javascript' src="/static/js/track_mgmt.js")
 
@@ -37,9 +37,10 @@ block append content
                       span.glyphicon.glyphicon-share
                       |  Share
                   .btn-group
-                    button.btn.btn-default(type='button')
+                    button.btn.btn-default(type='button' data-toggle="modal" data-target="#manageModal")
                       span.glyphicon.glyphicon-cog
                       |  Manage
+
                   .btn-group
                     button.btn.btn-default(type='button')
                       span.glyphicon.glyphicon-share-alt
@@ -149,3 +150,23 @@ block append content
                   h5
                     a User 5 :
                   span Vestibulum at eros
+
+        .modal.fade(id="manageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+          .modal-dialog
+            .modal-content
+              .modal-header
+                button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                h4.modal-title Manage Playlist
+                .modal-body
+                  h5 Title
+                  input.form-control(type='text')
+                  h5 Editors
+                  input.form-control(type='text')
+                  h5 Visibility
+                  select.form-control
+                    option(value='public') Public
+                    option(value='protected') Protected
+                    option(value='private') Private
+                .modal-footer
+                  button.btn.btn-default(type='button', data-dismiss='modal') Close
+                  button.btn.btn-primary(type='button') Save changes
