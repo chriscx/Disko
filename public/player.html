@@ -8,7 +8,6 @@
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800" rel="stylesheet" type="text/css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/static/css/player.css">
-    <script src="http://yui.yahooapis.com/pure/0.4.2/pure-min.css"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
@@ -54,8 +53,8 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8">
-          <h1>Playlist Name</h1>
-          <h4>by User</h4>
+          <h1>{{Playlist Name}}</h1>
+          <h4>by {{User}}</h4>
         </div>
       </div><br>
       <script type="text/javascript" src="/static/js/track_mgmt.js"></script>
@@ -173,6 +172,32 @@
                     <h5><a>User 5 :</a></h5><span>Vestibulum at eros</span>
                   </li>
                 </ul>
+              </div>
+            </div>
+          </div>
+          <div id="manageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                  <h4 class="modal-title">Manage Playlist</h4>
+                  <div class="modal-body">
+                    <h5>Title</h5>
+                    <input type="text" class="form-control">
+                    <h5>Editors</h5>
+                    <input type="text" class="form-control">
+                    <h5>Visibility</h5>
+                    <select class="form-control">
+                      <option value="public">Public</option>
+                      <option value="protected">Protected</option>
+                      <option value="private">Private</option>
+                    </select>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
