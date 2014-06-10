@@ -1,6 +1,18 @@
 var DiskoApp = angular.module('DiskoApp', []);
 
-DiskoApp.controller('playlistController',function($scope) {
+DiskoApp.service('playlistService', function() {
+
+});
+
+DiskoApp.service('playerService', function() {
+
+});
+
+DiskoApp.service('userService', function() {
+
+});
+
+DiskoApp.controller('playerController', function($scope) {
 
   $.get('/data/playlists.json', function(data) {
     $scope.$apply(function(){

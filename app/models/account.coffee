@@ -10,7 +10,6 @@ AccountSchema = new Schema(
   	index: true
   	unique: true
   birthdate: Date
-  playlists: [PlaylistSchema]
   )
 
 AccountSchema.plugin passportLocalMongoose
