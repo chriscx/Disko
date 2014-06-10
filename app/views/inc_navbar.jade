@@ -11,6 +11,8 @@ nav.navbar.navbar-default(role='navigation')
         ul.nav.navbar-nav
           li.active
             a(href='#') Explore
+          li.active
+            a(href='#' ng-click='isCollapsed = !isCollapsed') Playlists
         form.navbar-form.navbar-left(role='search')
           .form-group
             input.form-control(type='text', placeholder='Search' style='width: 400px;')

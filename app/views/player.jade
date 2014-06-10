@@ -4,11 +4,13 @@ block append content
   .container
     .row
       .col-md-8
-        h1 {{Playlist Name}}
-        h4 by {{User}}
+        h1 --Playlist Name--
+        h4 by --User--
     br
-    script(type='text/javascript' src="/static/js/track_mgmt.js")
-
+    script(type='text/javascript' src="/js/controllers/player.js")
+    .row(collapse='isCollapsed')
+      .well.well-lg
+        //- Collapsed well for displaying subviews for managing playlist and user settings
     .row(ng-controller='playerController')
       .col-md-7
         .row

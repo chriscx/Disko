@@ -1,4 +1,4 @@
-var DiskoApp = angular.module('DiskoApp', []);
+var DiskoApp = angular.module('DiskoApp', ['ui.bootstrap']);
 
 DiskoApp.service('playlistService', function() {
 
@@ -13,6 +13,8 @@ DiskoApp.service('userService', function() {
 });
 
 DiskoApp.controller('playerController', function($scope) {
+
+  $scope.isCollapsed = false;
 
   $.get('/data/playlists.json', function(data) {
     $scope.$apply(function(){
@@ -89,7 +91,7 @@ DiskoApp.controller('playerController', function($scope) {
     }
   };
 
-  $scope.savePlaylist = function () {
+  $scope.savePlaylist = function() {
     console.log("Saving playlist: " + $scope.playlist.name);
   };
 });
