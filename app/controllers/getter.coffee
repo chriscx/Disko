@@ -42,8 +42,9 @@ infos_yt = (content, callback) ->
   track =  new Track
     title: content.snippet.title
     artist: content.snippet.channelTitle
-    url: "http://www.youtube.com/watch?v=" + content.id
+    url: 'http://www.youtube.com/watch?v=' + content.id
     src: content.id
+    service: 'Youtube'
   callback track
 
 ### get the information from the responses and create objects to be stored in our DB ###
@@ -53,6 +54,7 @@ infos_sc = (content, callback) ->
     artist: content.user.username
     url: content.permalink_url
     src: content.id
+    service: 'Soundcloud'
   callback track
 
 ### manages the actions of dispatching between the different sources ###

@@ -80,7 +80,7 @@ block append content
                   //- th Added By
                   //- th Added Date
                   //- th url
-                  th source
+                  th Source
                 tr(ng-repeat='item in playlist.content | orderBy:sortingOrder:reverse')
                   //- td
                   //-   button.btn(type='button')
@@ -93,7 +93,7 @@ block append content
                   //- td {{item.addedDate}}
                   //- td {{item.url}}
                   td
-                    a(href='{{item.url}}') {{item.src}}
+                    a(href='{{item.url}}') {{item.service}}
               button.btn.btn-success.pull-right(type="button" ng-click="savePlaylist()")
                 span.glyphicon.glyphicon-ok  Save
 

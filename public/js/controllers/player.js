@@ -93,5 +93,6 @@ DiskoApp.controller('playerController', function($scope) {
 
   $scope.savePlaylist = function() {
     console.log("Saving playlist: " + $scope.playlist.name);
+    toastr.success('YESSS');
   };
 });
