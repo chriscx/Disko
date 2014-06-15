@@ -30,8 +30,8 @@ String.prototype.build_url = (source) ->
   src = sources[source]
   src.resolver + src.key + src.content + this
 
+#Replace by a redex if you can
 ytParseDuration = (time) ->
-  console.log time
   res = ''
   time = time.slice(2)
   iOh = time.indexOf('H')
@@ -88,7 +88,6 @@ request_url = (url, callback) ->
       callback response.body
 
 infos_yt = (content, callback) ->
-  console.log content
   track =  new Track
     title: content.snippet.title
     artist: content.snippet.channelTitle
@@ -96,7 +95,6 @@ infos_yt = (content, callback) ->
     src: content.id
     service: 'Youtube'
     duration: ytParseDuration content.contentDetails.duration
-  console.log track.duration
   callback track
 
 ### get the information from the responses and create objects to be stored in our DB ###
