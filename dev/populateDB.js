@@ -39,7 +39,8 @@ for(var i = 0; i < 20; i++) {
     url: 'www.dzfzeg.fef',
     src: 'dzzdfaev',
     order: i,
-    service: 'Soundcloud'
+    service: 'Soundcloud', 
+    duration: '3:' + (10+i)
   }
 
   PlaylistObj.content = PlaylistObj.content.concat(new Array(AssetObj));

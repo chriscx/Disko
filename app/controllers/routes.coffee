@@ -118,10 +118,11 @@ module.exports = (app) ->
 
   app.put '/data/:user/:playlist.json', (req, res) ->
     console.log('PUT playlist ' + req.params.playlist + ' JSON object')
-    Playlist.findOneAndUpdate {'id': req.params.id, 'owner': req.params.user},
+    Playlist.findOneAndUpdate {'id': req.params.playlist, 'owner': req.params.user},
       req.body,
       new: true,
         (err, data) ->
+          console.log data
           unless err
             res.json result: 'OK'
           else

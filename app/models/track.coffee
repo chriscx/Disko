@@ -10,6 +10,7 @@ TrackSchema = new Schema(
   src: String  #iframe url of track
   order: Number
   service: String
+  duration: String
 )
 
 Track = mongoose.model 'Track', TrackSchema
