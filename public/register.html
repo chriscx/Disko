@@ -1,25 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="DiskoApp">
   <head>
-    <title></title>
+    <title>Disko</title>
+    <!--favicon-->
+    <link rel="icon" type="image/png" href="/public/icon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800" rel="stylesheet" type="text/css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/static/css/player.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.3/css/toastr.min.css" type="text/css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.3/js/toastr.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+    <body data-spy="scroll" data-target="#nav-scrollspy">
+      <style type="text/css"></style>
+    </body>
+    <div class="container">
+      <h1>Register Page</h1>
+      <p class="lead">Say something worthwhile here.</p><br>
+      <form role="form" action="/register" method="post" style="max-width: 300px;">
+        <div class="form-group">
+          <input type="text" name="username" placeholder="Enter Username" class="form-control">
+        </div>
+        <div class="form-group">
+          <input type="password" name="password" placeholder="Password" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>&nbsp;<a href="/">
+          <button type="button" class="btn btn-primary">Cancel</button></a>
+      </form>
+    </div>
   </head>
-  <body></body>
-  <div class="container">
-    <h1>Register Page</h1>
-    <p class="lead">Say something worthwhile here.</p><br>
-    <form role="form" action="/register" method="post" style="max-width: 300px;">
-      <div class="form-group">
-        <input type="text" name="username" placeholder="Enter Username" class="form-control">
-      </div>
-      <div class="form-group">
-        <input type="password" name="password" placeholder="Password" class="form-control">
-      </div>
-      <button type="submit" class="btn btn-default">Submit</button>&nbsp;<a href="/">
-        <button type="button" class="btn btn-primary">Cancel</button></a>
-    </form>
-  </div>
 </html>

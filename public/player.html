@@ -8,13 +8,13 @@
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800" rel="stylesheet" type="text/css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/static/css/player.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.3/css/toastr.min.css" type="text/css" rel="stylesheet">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
-    <!--NOTIFICATIONS-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.3/js/toastr.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.3/css/toastr.min.css" type="text/css" rel="stylesheet">
-    <!--MOMENT.JS-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
     <body data-spy="scroll" data-target="#nav-scrollspy">
       <style type="text/css"></style>
@@ -27,6 +27,7 @@
         <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Explore</a></li>
+            <li class="active"><a href="#" ng-click="isCollapsed = !isCollapsed">Playlists</a></li>
           </ul>
           <form role="search" class="navbar-form navbar-left">
             <div class="form-group">
@@ -53,12 +54,16 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8">
-          <h1>{{Playlist Name}}</h1>
-          <h4>by {{User}}</h4>
+          <h1>--Playlist Name--</h1>
+          <h4>by --User--</h4>
         </div>
       </div><br>
-      <script type="text/javascript" src="/static/js/track_mgmt.js"></script>
-      <div ng-controller="playlistController" class="row">
+      <script type="text/javascript" src="/js/controllers/player.js"></script>
+      <div collapse="isCollapsed" class="row">
+        <div class="well well-lg">
+        </div>
+      </div>
+      <div ng-controller="playerController" class="row">
         <div class="col-md-7">
           <div class="row">
             <div class="col-md-12">
