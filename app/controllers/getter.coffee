@@ -7,7 +7,7 @@ Playlist = require('../models/playlist').Playlist
 sources =
   youtube:
     resolver: "https://www.googleapis.com/youtube/v3/videos?key="
-    content: "&part=snippet&id="
+    content: "&part=snippet,contentDetails&id="
     key: "AIzaSyCxL2W7WQKGQ_IKN9ug37rxeJm-Hr0t7Fw"
 
     documentation: "https://developers.google.com/youtube/v3/docs/videos?hl=fr"
@@ -30,6 +30,55 @@ String.prototype.build_url = (source) ->
   src = sources[source]
   src.resolver + src.key + src.content + this
 
+#Replace by a redex if you can
+ytParseDuration = (time) ->
+  res = ''
+  time = time.slice(2)
+  iOh = time.indexOf('H')
+  if(iOh > -1)
+    hours = time.slice(0, iOh)
+    time = time.slice(iOh+1)
+  iOm = time.indexOf('M')
+  if(iOm > -1)
+    minutes = time.slice(0, iOm)
+    time = time.slice(iOm+1)
+  iOs = time.indexOf('S')
+  if(iOs > -1)
+    seconds = time.slice(0, iOs)
+
+  if seconds < 10
+    seconds = '0' + seconds
+  if hours > 0 && minutes < 10
+    minutes = '0' + minutes
+  if hours > 0 && minutes == undefined
+    minutes = '00'
+
+  unless minutes == 0 || minutes == undefined
+    unless hours >0
+      minutes + ':' + seconds
+    else
+      hours + ':' + minutes + ':' + seconds
+  else 
+    seconds
+
+convertDuration = (time) ->
+  inSeconds = Math.floor(time/1000) #from ms to s
+  hours = Math.floor(inSeconds/3600)
+  inSeconds = inSeconds - hours * 3600
+  minutes = Math.floor(inSeconds / 60)
+  seconds = inSeconds - minutes * 60
+
+  if seconds < 10
+    seconds = '0' + seconds
+  if hours > 0 && minutes < 10
+    minutes = '0' + minutes
+  unless minutes == 0 || minutes == undefined
+    unless hours >0
+      minutes + ':' + seconds
+    else
+      hours + ':' + minutes + ':' + seconds
+  else
+    seconds
 
 request_url = (url, callback) ->
   request url, (error, response, html) ->
@@ -42,8 +91,10 @@ infos_yt = (content, callback) ->
   track =  new Track
     title: content.snippet.title
     artist: content.snippet.channelTitle
-    url: "http://www.youtube.com/watch?v=" + content.id
+    url: 'http://www.youtube.com/watch?v=' + content.id
     src: content.id
+    service: 'Youtube'
+    duration: ytParseDuration content.contentDetails.duration
   callback track
 
 ### get the information from the responses and create objects to be stored in our DB ###
@@ -53,6 +104,8 @@ infos_sc = (content, callback) ->
     artist: content.user.username
     url: content.permalink_url
     src: content.id
+    service: 'Soundcloud'
+    duration: convertDuration content.duration
   callback track
 
 ### manages the actions of dispatching between the different sources ###

@@ -9,6 +9,8 @@ TrackSchema = new Schema(
   url: String  #url added by user
   src: String  #iframe url of track
   order: Number
+  service: String
+  duration: String
 )
 
 Track = mongoose.model 'Track', TrackSchema

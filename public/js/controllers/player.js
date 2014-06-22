@@ -19,6 +19,7 @@ DiskoApp.controller('playerController', function($scope) {
   $.get('/data/playlists.json', function(data) {
     $scope.$apply(function(){
       $scope.playlist = {};
+      $scope.playlist.owner = data.content[0].owner;
       $scope.playlist.name = data.content[0].id;
       $scope.playlist.content = data.content[0].content;
     });
@@ -73,16 +74,15 @@ DiskoApp.controller('playerController', function($scope) {
         stop = true;
     });
     if(!stop) {
-      track.addedDate = moment().format();
-      console.log(moment().format());
-      track.addeBy = 'user';
+      track.addedDate = new Date();
+      track.addeBy = 'user';  //TEMP
       track.order = ($scope.playlist.content).length;
+      //Notifications
       toastr.success('Track added to the playlist');
       $("span.glyphicon.form-control-feedback").addClass("glyphicon-ok");
       $("div.form-group.has-feedback").addClass("has-success");
       $scope.$apply(function() {
         $scope.playlist.content.push(track);
-        console.log($scope.playlist.content);
       });
     } else {
       $("div.form-group.has-feedback").addClass("has-warning");
@@ -92,6 +92,12 @@ DiskoApp.controller('playerController', function($scope) {
   };
 
   $scope.savePlaylist = function() {
+    $.ajax({
+      type: "PUT",
+      url: '/data/' + $scope.playlist.owner + '/' + $scope.playlist.name + '.json',
+      data: {content: $scope.playlist.content}
+    });
     console.log("Saving playlist: " + $scope.playlist.name);
+    toastr.success('YESSS');
   };
 });
