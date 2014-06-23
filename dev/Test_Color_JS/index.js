@@ -1,5 +1,5 @@
 var step = 3;
-var interval = 100;
+var interval = 300;
 var red = 0;
 var green = 0;
 var blue = 1.57;
@@ -26,3 +26,4 @@ setInterval(function () {
 	$("#bg").css('background-color', 'rgb(100%,' + green + '%, 0%)');
 	console.log(green);
 }, interval);
+//stocker dans array pour le 1er cycle puis lire depuis l'array

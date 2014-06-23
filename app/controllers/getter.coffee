@@ -59,7 +59,7 @@ ytParseDuration = (time) ->
     else
       hours + ':' + minutes + ':' + seconds
   else 
-    seconds
+    '0:' + seconds
 
 convertDuration = (time) ->
   inSeconds = Math.floor(time/1000) #from ms to s
