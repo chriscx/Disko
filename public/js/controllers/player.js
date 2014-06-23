@@ -59,6 +59,7 @@ DiskoApp.controller('playerController', function($scope, $sce) {
       $.get('/data/getter/' + $scope.playlist.name, {url: $scope.newTrackUrl}, function(answer) {
         if(answer.code != 0) {
           $scope.appendTrack(answer);
+          $scope.savePlaylist();
         }
         else {
           $("span.glyphicon.form-control-feedback").addClass("glyphicon-remove");
