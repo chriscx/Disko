@@ -22,7 +22,7 @@ block append content
                     button.btn.btn-default(type='button')
                       span.glyphicon.glyphicon-step-backward
                       |  Previous
-                    button.btn.btn-default(type='button')
+                    button.btn.btn-default(type='button' ng-click="buttons.play()")
                       span.glyphicon.glyphicon-play
                       |  Play
                     Button.btn.btn-default.hide(type='button')
@@ -93,9 +93,10 @@ block append content
                   //- td {{item.addedDate}}
                   //- td {{item.url}}
                   td
-                    a(href='{{item.url}}') {{item.service}}
+                    a(href='{{item.url}}' target="_BLANK") {{item.service}}
               button.btn.btn-success.pull-right(type="button" ng-click="savePlaylist()")
                 span.glyphicon.glyphicon-ok  Save
+            div(id="player")
 
       .col-md-5
         .row
@@ -103,7 +104,8 @@ block append content
             .panel-heading
               h4 Playing : Artist - Title
             .panel-body
-              iframe(width="100%" height="400" scrolling="no" frameborder="no" ng-src="{{playing.current}}")
+              iframe(id="scPlayer" ng-show="playing.isSC" width="100%" height="400" scrolling="no" frameborder="no" src="")
+              iframe(id="ytPlayer" ng-show="!playing.isSC" width="100%" height="400" scrolling="no" frameborder="no" ng-src="{{playing.currentURL}}")
         .row
           .panel.panel-default
             .panel-heading
