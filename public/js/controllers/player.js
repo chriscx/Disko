@@ -157,13 +157,20 @@ DiskoApp.controller('playerController', function($scope, $sce) {
       $scope.playing.isSC = false;
       console.log('CASE yt');
 
-      player = new YT.Player('player', {
-        width: 1280,
-        height: 720,
+      player = new YT.Player('ytPlayer', {
+        width: '100%',
+        height: 400,
+        playerVars: {
+          autohide: 1
+        },
         videoId: track.src,
         events: {
           'onReady': function (event) {
             event.target.playVideo();
+          },
+          'onStateChange': function (event) {
+            if(event.data == 0)
+              console.log('TERMINATED');
           }
         }
       });
