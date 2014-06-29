@@ -61,7 +61,7 @@ module.exports = (app) ->
               result: 'error'
               err: err
 
-  app.del '/data/:user/info.json', (req, res) ->
+  app.delete '/data/:user/info.json', (req, res) ->
     console.log('DEL user info ' + req.params.playlist + ' JSON object')
     Account.remove {'nickname': req.params.user}, (err, data) ->
       if data > 0 and not err
@@ -130,7 +130,7 @@ module.exports = (app) ->
               result: 'error'
               err: err
 
-  app.del '/data/:user/:playlist.json', (req, res) ->
+  app.delete '/data/:user/:playlist.json', (req, res) ->
     console.log('DEL playlist ' + req.params.playlist + ' JSON object')
     entry.remove {'id': req.params.id, 'owner': req.params.user}, (err, data) ->
       if data > 0 and not err
