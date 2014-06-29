@@ -18,10 +18,11 @@ DiskoApp.controller('playerController', function($scope, $sce) {
 
   $.get('/data/playlists.json', function(data) {
     $scope.$apply(function(){
+      console.log(data);
       $scope.playlist = {};
       $scope.playlist.owner = data.content[0].owner;
       $scope.playlist.name = data.content[0].id;
-      $scope.playlist.content = data.content[0].content;
+      $scope.playlist.content = data.content[20].content;
       //initialize the player
       //$scope.playing.changeTrack(data.content[0].content[0]);
       $scope.playing.init(data.content[0].content[0]);
@@ -44,8 +45,8 @@ DiskoApp.controller('playerController', function($scope, $sce) {
       "showMethod": "fadeIn",
       "hideMethod": "fadeOut"
     }
-    toastr.options.onHidden = function() { 
-      $("span.glyphicon.form-control-feedback").addClass("hide"); 
+    toastr.options.onHidden = function() {
+      $("span.glyphicon.form-control-feedback").addClass("hide");
       $("div.form-group.has-feedback").removeClass("has-success has-warning");
       $scope.$apply(function() {
         $scope.newTrackUrl = null;
@@ -107,7 +108,7 @@ DiskoApp.controller('playerController', function($scope, $sce) {
   //manages the player
   $scope.playing = {};
   $scope.playing.soundcloud = 'http://api.soundcloud.com/tracks/';
-  $scope.playing.youtube = 'http://www.youtube.com/embed/'; 
+  $scope.playing.youtube = 'http://www.youtube.com/embed/';
   $scope.playing.currentURL = null;
   $scope.playing.currentTrack = null;
   $scope.playing.scWidget = null;
@@ -147,7 +148,7 @@ DiskoApp.controller('playerController', function($scope, $sce) {
 
     if(track.service == 'Soundcloud') {
       $scope.playing.isSC = true;
-      
+
       console.log('CASE sc');
       $scope.playing.scWidget.load($scope.playing.soundcloud + track.src, {
         visual: true

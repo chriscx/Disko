@@ -72,6 +72,11 @@ block append content
             //-         p {{item.title}}
             //-         span.inline.right 3.10
             div
+              script.
+                  $(function() {
+                    $( "#sortable" ).sortable();
+                    $( "#sortable" ).disableSelection();
+                  });
               table.table.table-hover
                 tr
                   //- th
@@ -81,19 +86,20 @@ block append content
                   //- th Added Date
                   //- th url
                   th Source
-                tr(ng-repeat='item in playlist.content | orderBy:sortingOrder:reverse')
-                  //- td
-                  //-   button.btn(type='button')
-                  //-     span.glyphicon.glyphicon-play
-                  td
-                    a(ng-click="playing.changeTrack(item)")  {{item.title}} - {{item.artist}}
-                  td.
-                    {{item.duration}}
-                  //- td {{item.addedBy}}
-                  //- td {{item.addedDate}}
-                  //- td {{item.url}}
-                  td
-                    a(href='{{item.url}}' target="_BLANK") {{item.service}}
+                tbody(id='sortable')
+                  tr(ng-repeat='item in playlist.content | orderBy:sortingOrder:reverse')
+                    //- td
+                    //-   button.btn(type='button')
+                    //-     span.glyphicon.glyphicon-play
+                    td
+                      a(ng-click="playing.changeTrack(item)")  {{item.title}} - {{item.artist}}
+                    td.
+                      {{item.duration}}
+                    //- td {{item.addedBy}}
+                    //- td {{item.addedDate}}
+                    //- td {{item.url}}
+                    td
+                      a(href='{{item.url}}' target="_BLANK") {{item.service}}
               button.btn.btn-success.pull-right(type="button" ng-click="savePlaylist()")
                 span.glyphicon.glyphicon-ok Save
 

@@ -1,8 +1,8 @@
 #dependencies
 request = require 'request'
 colors = require 'colors'
-Track = require('../models/track').Track
-Playlist = require('../models/playlist').Playlist
+Track = require('./models/track').Track
+Playlist = require('./models/playlist').Playlist
 
 sources =
   youtube:
@@ -18,7 +18,7 @@ sources =
     key: "b45b1aa10f1ac2941910a7f0d10f8e28"
 
     documentation: "https://developers.soundcloud.com/docs/api/reference"
-    
+
 ### find from which site is the video ###
 get_source = (track, callback) ->
   for index of sources
@@ -58,7 +58,7 @@ ytParseDuration = (time) ->
       minutes + ':' + seconds
     else
       hours + ':' + minutes + ':' + seconds
-  else 
+  else
     '0:' + seconds
 
 convertDuration = (time) ->
@@ -119,7 +119,7 @@ dispatch = (track, callback) ->
         if(s[1])
           s = s[1].split("&")
           track = s[0]
-        else 
+        else
           stop = true
   	  when "soundcloud"
   	  else
@@ -139,7 +139,7 @@ dispatch = (track, callback) ->
             parsed = JSON.parse(res)
             if(parsed.kind == 'track')
               infos_sc JSON.parse(res), callback
-            else 
+            else
               callback {code: 0}
     else
       callback {code: 0}

@@ -1,8 +1,8 @@
 path = require 'path'
 passport = require 'passport'
-Account = require('../models/account').Account;
-Playlist = require('../models/playlist').Playlist
-Track = require('../models/track').Track
+Account = require('./models/account').Account;
+Playlist = require('./models/playlist').Playlist
+Track = require('./models/track').Track
 Getters = require './getter'
 
 module.exports = (app) ->
@@ -144,6 +144,7 @@ module.exports = (app) ->
   app.get '/data/getter/:playlist', (req, res) ->
     Getters.dispatch req.query.url, (data) ->
       res.send data
+
 ################################################################################
 #                                                                              #
 #                            Routes for views                                  #

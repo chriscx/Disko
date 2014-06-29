@@ -16,6 +16,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.3/js/toastr.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <script src="https://w.soundcloud.com/player/api.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
     <body data-spy="scroll" data-target="#nav-scrollspy">
@@ -115,17 +116,25 @@
           <div class="row">
             <div class="col-md-12">
               <div>
+                <script>
+                  $(function() {
+                    $( "#sortable" ).sortable();
+                    $( "#sortable" ).disableSelection();
+                  });
+                </script>
                 <table class="table table-hover">
                   <tr>
                     <th>Song</th>
                     <th>Duration</th>
                     <th>Source</th>
                   </tr>
-                  <tr ng-repeat="item in playlist.content | orderBy:sortingOrder:reverse">
-                    <td><a ng-click="playing.changeTrack(item)"> {{item.title}} - {{item.artist}}</a></td>
-                    <td>{{item.duration}}</td>
-                    <td><a href="{{item.url}}" target="_BLANK">{{item.service}}</a></td>
-                  </tr>
+                  <tbody id="sortable">
+                    <tr ng-repeat="item in playlist.content | orderBy:sortingOrder:reverse">
+                      <td><a ng-click="playing.changeTrack(item)"> {{item.title}} - {{item.artist}}</a></td>
+                      <td>{{item.duration}}</td>
+                      <td><a href="{{item.url}}" target="_BLANK">{{item.service}}</a></td>
+                    </tr>
+                  </tbody>
                 </table>
                 <button type="button" ng-click="savePlaylist()" class="btn btn-success pull-right"><span class="glyphicon glyphicon-ok">Save</span></button>
               </div>
