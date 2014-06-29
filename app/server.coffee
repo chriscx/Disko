@@ -43,21 +43,9 @@ app.use errorHandler
 app.set 'views', path.normalize(__dirname + '/views')
 app.set 'view engine', 'jade'
 app.set 'view options', pretty: true
-# app.use express.bodyParser()
-# app.use express.methodOverride()
-# app.use express.cookieParser("your secret here")
-# app.use express.session()
-# app.use app.router
+
 app.use stylus.middleware "#{__dirname}/../public"
 app.use express.static "#{__dirname}/../public"
-
-# app.configure "development", ->
-#   app.use express.errorHandler
-#     dumpExceptions: true
-#     showStack: true
-#
-# app.configure "production", ->
-#   app.use express.errorHandler()
 
 # passport.use Account.createStrategy()
 #
@@ -68,21 +56,9 @@ app.use express.static "#{__dirname}/../public"
 # mongoose.connect "mongodb://localhost/passport_local_mongoose"
 mongoose.connect 'mongodb://localhost/disko_dev'
 
-require('./controllers/routes') app
+require('./routes') app
 
-# # Https Config
-# keyPath = __dirname + '/../ssl/server.key'
-# certPath = __dirname + '/../ssl/server.crt'
-#
-# options =
-#     key: fs.readFileSync(keyPath),
-#     cert: fs.readFileSync(certPath)
+server = require('http').Server(app)
+io = require('socket.io')(server)
 
-# server = https.createServer options, app
-# server.listen 3000, () ->
-#     console.log 'https://localhost:3000'
-# server = http.createServer app
-# server.listen 3000, () ->
-#     console.log 'http://localhost:3000'
-
-app.listen 3000
+server.listen 3000

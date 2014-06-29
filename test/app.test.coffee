@@ -63,7 +63,7 @@ describe 'app', ->
       next()
 
   it 'should get single playlist in json', (next) ->
-    request 'http://localhost:3000/playlists.json', (err, res, body) ->
+    request 'http://localhost:3000/data/playlists.json', (err, res, body) ->
       res.statusCode.should.be.eql 200
       data = JSON.parse body
       data.result.should.be.eql 'OK'
@@ -72,7 +72,7 @@ describe 'app', ->
 
   it 'should post new playlist', (next) ->
     request.post(
-      uri: 'http://localhost:3000/playlists.json'
+      uri: 'http://localhost:3000/data/playlists.json'
       headers:
         'content-type': 'application/json'
       body: JSON.stringify
@@ -87,7 +87,7 @@ describe 'app', ->
 
   it 'should del blog playlist', (next) ->
     request.post(
-      uri: 'http://localhost:3000/playlists.json'
+      uri: 'http://localhost:3000/data/playlists.json'
       headers:
         'content-type': 'application/json'
       body: JSON.stringify
@@ -106,7 +106,7 @@ describe 'app', ->
 
   it 'should put blog playlist', (next) ->
     request.post(
-      uri: 'http://localhost:3000/playlists.json'
+      uri: 'http://localhost:3000/data/playlists.json'
       headers:
         'content-type': 'application/json'
       body: JSON.stringify
