@@ -61,4 +61,9 @@ require('./routes') app
 server = require('http').Server(app)
 io = require('socket.io')(server)
 
+io.on 'connection', (socket) ->
+  socket.on 'pl_change', (data) ->
+    console.log(data)
+    socket.broadcast.emit 'pl_change', my: 'changes forwarded'
+
 server.listen 3000

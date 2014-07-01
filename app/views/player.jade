@@ -73,9 +73,19 @@ block append content
             //-         span.inline.right 3.10
             div
               script.
+                  var socket = io.connect('http://localhost');
                   $(function() {
-                    $( "#sortable" ).sortable();
+                    $( "#sortable" ).sortable({
+                      key: "sort",
+                      stop: function(event, ui) {
+                        console.log(ui);
+                        socket.emit('pl_change', { pl: 'table changed' });
+                      }
+                    });
                     $( "#sortable" ).disableSelection();
+                  });
+                  socket.on('pl_change', function (data) {
+                    console.log(data);
                   });
               table.table.table-hover
                 tr
