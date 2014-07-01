@@ -62,8 +62,15 @@ server = require('http').Server(app)
 io = require('socket.io')(server)
 
 io.on 'connection', (socket) ->
-  socket.on 'pl_change', (data) ->
+
+  socket.on 'join_r_playlist', (data) ->
+    socket.join(data.room);
+
+  socket.on 'action_playlist', (data) ->
+    io.to(data.room).broadcast.emit 'action_playlist', data
+
+###  socket.on 'pl_change', (data) ->
     console.log(data)
-    socket.broadcast.emit 'pl_change', my: 'changes forwarded'
+    socket.broadcast.emit 'pl_change', my: 'changes forwarded'###
 
 server.listen 3000
