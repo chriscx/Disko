@@ -24,7 +24,7 @@ DiskoApp.controller('playerController', function($scope, $sce) {
       $scope.playlist.content = data.content[0].content;
       //initialize the player
       //$scope.playing.changeTrack(data.content[0].content[0]);
-      $scope.playing.init(data.content[0].content[0]);
+      $scope.playing.init();
     });
   });
 
@@ -111,31 +111,49 @@ DiskoApp.controller('playerController', function($scope, $sce) {
   $scope.playing.currentURL = null;
   $scope.playing.currentTrack = null;
   $scope.playing.scWidget = null;
+  $scope.playing.ytWidget = null;
   $scope.playing.isSC = false;
+  //TODO : init SC
+  //       init YT
+  /*
+    Charger le bon au moment de init
+    puis charger l'autre dès lecture premiere track correspondante
 
-  $scope.playing.init = function (track) {
+  */
+  $scope.playing.init = function (okYT) {
+    console.log('init');
+    var track = $scope.playlist.content[0];
     $scope.playing.currentTrack = track;
 
     if(track.service == 'Soundcloud'){
       $scope.playing.isSC = true;
       $('#scPlayer').attr('src', 'https://w.soundcloud.com/player/?visual=true&url=http://api.soundcloud.com/tracks/' + track.src);
     }
+    var tag = document.createElement('script');
 
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    if(track.service == 'Youtube' && okYT)
+        $scope.playing.changeTrack(track);
     $('#scPlayer').load(function(){ //binds events when the iframe is loaded
-      console.log("LOADED");
+      console.log("LOADED SC");
 
       var iframeElement   = document.querySelector('#scPlayer');
       $scope.playing.scWidget = SC.Widget(iframeElement);
 
       $scope.playing.scWidget.bind(SC.Widget.Events.FINISH, function(){ //ADDS ACTION for terminating song
         if($scope.playlist.content.length > parseInt($scope.playing.currentTrack.order)+1 && $scope.playing.isSC){ //stops if no more track
+          console.log('TERMINATED SC');
           $scope.$apply(function () {
             $scope.playing.changeTrack($scope.playlist.content[parseInt($scope.playing.currentTrack.order) + 1]);
           });
-          console.log('TERMINATED');
         }
-        else
-          console.log('STOP');
+        else {
+          if($scope.playing.isSC)
+            console.log('STOP SC');
+        }
       });
     });
   };
@@ -149,34 +167,57 @@ DiskoApp.controller('playerController', function($scope, $sce) {
       $scope.playing.isSC = true;
       
       console.log('CASE sc');
-      $scope.playing.scWidget.load($scope.playing.soundcloud + track.src, {
-        visual: true
-      });
+      if($scope.playing.scWidget) {
+        $scope.playing.scWidget.load($scope.playing.soundcloud + track.src, {
+          visual: true
+        });
+      } else {
+        $('#scPlayer').attr('src', 'https://w.soundcloud.com/player/?visual=true&url=http://api.soundcloud.com/tracks/' + track.src);
+      }
     }
     if(track.service == 'Youtube') {
+
       $scope.playing.isSC = false;
       console.log('CASE yt');
-
-      player = new YT.Player('ytPlayer', {
-        width: '100%',
-        height: 400,
-        playerVars: {
-          autohide: 1
-        },
-        videoId: track.src,
-        events: {
-          'onReady': function (event) {
-            event.target.playVideo();
+      if($scope.playing.ytWidget == null) {
+        $scope.playing.ytWidget = new YT.Player('ytPlayer', { //undefined is not a function
+          width: '100%',
+          height: 400,
+          playerVars: {
+            autohide: 1
           },
-          'onStateChange': function (event) {
-            if(event.data == 0)
-              console.log('TERMINATED');
+          videoId: track.src,
+          events: {
+            'onReady': function (event) {
+              console.log('PLAYER READY YT');
+            },
+            'onStateChange': function (event) {
+              if(event.data == -1) {
+                console.log('VIDEO LOADING');
+              }
+              if(event.data == 0) {
+                if($scope.playlist.content.length > parseInt($scope.playing.currentTrack.order)+1 && $scope.playing){ //stops if no more track
+                  console.log('TERMINATED YT');
+                  $scope.$apply(function () {
+                    $scope.playing.changeTrack($scope.playlist.content[parseInt($scope.playing.currentTrack.order) + 1]);
+                  });
+                }
+                else
+                  console.log('STOP YT');
+              }
+            }
           }
-        }
-      });
+        });
+      } else {
+        console.log('SECOND TIME YT');
+        console.log(track.src);
+        setTimeout(function () {
+
+        $scope.playing.ytWidget.cueVideoById(track.src);
+        }, 1000);
+      }
 
     }
-    //$scope.playing.currentURL = $sce.trustAsResourceUrl($scope.playing[track.service.toLowerCase()] + track.src);
   };
 
   //buttons to control the tracks
@@ -203,5 +244,12 @@ DiskoApp.controller('playerController', function($scope, $sce) {
 
       function onPlayerReady(event) {
         event.target.setVolume(100);
-        event.target.playVideo();
+        event.target.stopVideo();
+        //event.target.playVideo();
       }
+function onYouTubeIframeAPIReady() {
+var scp = angular.element('[ng-controller="playerController"]').scope();
+scp.playing.init(true);
+
+  console.log('LOADED YT');
+}
