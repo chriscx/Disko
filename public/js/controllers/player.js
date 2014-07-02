@@ -45,16 +45,19 @@ DiskoApp.controller('playerController', function($scope, $sce) {
       "hideMethod": "fadeOut"
     }
     toastr.options.onHidden = function() { 
+      //JQUERY
       $("span.glyphicon.form-control-feedback").addClass("hide"); 
       $("div.form-group.has-feedback").removeClass("has-success has-warning");
       $scope.$apply(function() {
         $scope.newTrackUrl = null;
       });
     };
+    //JQUERY
     $("div.form-group.has-feedback").removeClass('has-error has-success has-warning');
     $("span.glyphicon.form-control-feedback").removeClass("glyphicon-ok glyphicon-remove hide");
 
     if($scope.newTrackUrl == undefined) {
+        //JQUERY
         $("span.glyphicon.form-control-feedback").addClass("glyphicon-remove");
         $("div.form-group.has-feedback").addClass("has-error");
     } else {
@@ -65,6 +68,7 @@ DiskoApp.controller('playerController', function($scope, $sce) {
           $scope.savePlaylist();
         }
         else {
+          //JQUERY
           $("span.glyphicon.form-control-feedback").addClass("glyphicon-remove");
           $("div.form-group.has-feedback").addClass("has-error");
         }
@@ -83,12 +87,14 @@ DiskoApp.controller('playerController', function($scope, $sce) {
       track.order = ($scope.playlist.content).length;
       //Notifications
       toastr.success('Track added to the playlist');
+      //JQUERY
       $("span.glyphicon.form-control-feedback").addClass("glyphicon-ok");
       $("div.form-group.has-feedback").addClass("has-success");
       $scope.$apply(function() {
         $scope.playlist.content.push(track);
       });
     } else {
+      //JQUERY
       $("div.form-group.has-feedback").addClass("has-warning");
       $("span.glyphicon.form-control-feedback").addClass("glyphicon-remove");
       toastr.warning("Track already in playlist");
@@ -102,9 +108,9 @@ DiskoApp.controller('playerController', function($scope, $sce) {
       data: {content: $scope.playlist.content}
     });
     console.log("Saving playlist: " + $scope.playlist.name);
-    toastr.success('YESSS');
+    toastr.success('Playlist Saved');
   };
-  //manages the player
+  //manages the player's information
   $scope.playing = {};
   $scope.playing.soundcloud = 'http://api.soundcloud.com/tracks/';
   $scope.playing.youtube = 'http://www.youtube.com/embed/'; 
@@ -113,9 +119,11 @@ DiskoApp.controller('playerController', function($scope, $sce) {
   $scope.playing.scWidget = null;
   $scope.playing.ytWidget = null;
   $scope.playing.isSC = false;
+
   //TODO : init SC
   //       init YT
   /*
+
     Charger le bon au moment de init
     puis charger l'autre dès lecture premiere track correspondante
 
@@ -127,6 +135,7 @@ DiskoApp.controller('playerController', function($scope, $sce) {
 
     if(track.service == 'Soundcloud'){
       $scope.playing.isSC = true;
+      //JQUERY
       $('#scPlayer').attr('src', 'https://w.soundcloud.com/player/?visual=true&url=http://api.soundcloud.com/tracks/' + track.src);
     }
     var tag = document.createElement('script');
@@ -137,6 +146,7 @@ DiskoApp.controller('playerController', function($scope, $sce) {
 
     if(track.service == 'Youtube' && okYT)
         $scope.playing.changeTrack(track);
+    //JQUERY (indispensable ?)
     $('#scPlayer').load(function(){ //binds events when the iframe is loaded
       console.log("LOADED SC");
 
@@ -158,7 +168,7 @@ DiskoApp.controller('playerController', function($scope, $sce) {
     });
   };
 
-  $scope.playing.changeTrack = function(track) {
+  $scope.playing.changeTrack = function(track, startPlay) {
     console.log('NEXT TRACK');
     console.log(track);
     $scope.playing.currentTrack = track;
@@ -172,6 +182,7 @@ DiskoApp.controller('playerController', function($scope, $sce) {
           visual: true
         });
       } else {
+        //JQUERY
         $('#scPlayer').attr('src', 'https://w.soundcloud.com/player/?visual=true&url=http://api.soundcloud.com/tracks/' + track.src);
       }
     }
@@ -211,45 +222,59 @@ DiskoApp.controller('playerController', function($scope, $sce) {
       } else {
         console.log('SECOND TIME YT');
         console.log(track.src);
-        setTimeout(function () {
 
-        $scope.playing.ytWidget.cueVideoById(track.src);
+        //Seule solution trouvée pour le moment
+        /*
+            Problème: On ne peut changer l'url de la vidéo qu'une fois que le player YT est affiché
+            Sans Timeout le player ne s'affiche pas assez vite et l'url est changée avant
+
+            Solution temporaire: Timeout
+
+            Solution souhaitée: Changer une fois que le player est affiché
+        */
+        setTimeout(function () { 
+          $scope.playing.ytWidget.cueVideoById(track.src);
+          if(startPlay)
+            $scope.actions.play();
         }, 1000);
       }
 
     }
   };
 
+  /*
+    Liste des actions du player, associées aux boutons ou à la lecture
+  */
+  $scope.actions = {};
+  $scope.actions.play = function () {
+    if($scope.playing.isSC) {
+      $scope.playing.scWidget.play();
+    } else {
+      $scope.playing.ytWidget.playVideo();
+    }
+  };
+  $scope.actions.stop = function () {  
+  };
+  $scope.actions.pause = function () {  
+  };
+  $scope.actions.next = function () {  
+  };
+  $scope.actions.previous = function () {  
+  };
+
   //buttons to control the tracks
   //docs soundcloud => http://developers.soundcloud.com/docs/api/html5-widget#events
   $scope.buttons = {};
   $scope.buttons.play = function () {
-    if($scope.playing.currentTrack.service == 'Soundcloud')
-      $scope.playing.scWidget.play();
+    $scope.actions.play();
   };
 
-});
-    // function onYouTubeIframeAPIReady() {
-    //     console.log('here');
-    //     var player;
-    //     player = new YT.Player('player', {
-    //       width: 1280,
-    //       height: 720,
-    //       videoId: 'M7lc1UVf-VE',
-    //       events: {
-    //         'onReady': onPlayerReady
-    //       }
-    //     });
-    //   }
 
-      function onPlayerReady(event) {
-        event.target.setVolume(100);
-        event.target.stopVideo();
-        //event.target.playVideo();
-      }
+});
+
 function onYouTubeIframeAPIReady() {
-var scp = angular.element('[ng-controller="playerController"]').scope();
-scp.playing.init(true);
+  var scp = angular.element('[ng-controller="playerController"]').scope();
+  scp.playing.init(true);
 
   console.log('LOADED YT');
 }
