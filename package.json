@@ -23,7 +23,8 @@
     "chai": "^1.9.1",
     "socket.io": "^1.0.6",
     "body-parser": "^1.4.3",
-    "method-override": "^2.0.2"
+    "method-override": "^2.0.2",
+    "jsondiffpatch": "^0.1.7"
   },
   "devDependencies": {
     "coffee-script": "1.7.1",

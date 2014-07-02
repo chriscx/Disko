@@ -63,11 +63,14 @@ io = require('socket.io')(server)
 
 io.on 'connection', (socket) ->
 
-  socket.on 'join_r_playlist', (data) ->
-    socket.join(data.room);
+  socket.on 'join_playlist_room', (data) ->
+    console.log 'joined room -> ' + data.room
+    socket.join data.room
 
   socket.on 'action_playlist', (data) ->
-    io.to(data.room).broadcast.emit 'action_playlist', data
+    console.log 'action playlist'
+    console.log data.content
+    socket.broadcast.to(data.room).emit 'action_playlist', data.content
 
 ###  socket.on 'pl_change', (data) ->
     console.log(data)

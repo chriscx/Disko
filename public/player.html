@@ -17,6 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.3/js/toastr.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="//rawgithub.com/angular-ui/ui-sortable/master/src/sortable.js"></script>
     <script src="//cdn.socket.io/socket.io-1.0.6.js"></script>
     <script src="https://w.soundcloud.com/player/api.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -117,29 +118,13 @@
           <div class="row">
             <div class="col-md-12">
               <div>
-                <script>
-                  var socket = io.connect('http://localhost');
-                  $(function() {
-                    $( "#sortable" ).sortable({
-                      key: "sort",
-                      stop: function(event, ui) {
-                        console.log(ui);
-                        socket.emit('pl_change', { pl: 'table changed' });
-                      }
-                    });
-                    $( "#sortable" ).disableSelection();
-                  });
-                  socket.on('pl_change', function (data) {
-                    console.log(data);
-                  });
-                </script>
                 <table class="table table-hover">
                   <tr>
                     <th>Song</th>
                     <th>Duration</th>
                     <th>Source</th>
                   </tr>
-                  <tbody id="sortable">
+                  <tbody ui-sortable="sortableOptions" ng-model="playlist.content">
                     <tr ng-repeat="item in playlist.content | orderBy:sortingOrder:reverse">
                       <td><a ng-click="playing.changeTrack(item)"> {{item.title}} - {{item.artist}}</a></td>
                       <td>{{item.duration}}</td>

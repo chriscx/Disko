@@ -1,4 +1,4 @@
-var DiskoApp = angular.module('DiskoApp', ['ui.bootstrap']);
+var DiskoApp = angular.module('DiskoApp', ['ui.sortable', 'ui.bootstrap']);
 
 DiskoApp.service('playlistService', function() {
 
@@ -14,6 +14,13 @@ DiskoApp.service('userService', function() {
 
 DiskoApp.controller('playerController', function($scope, $sce) {
 
+  var socket = io.connect('http://localhost');
+  socket.emit('join_playlist_room', {room: 'playlist1'});
+  socket.on('action_playlist', function(data) {
+    console.log(data.room);
+    console.log(data.content);
+  });
+
   $scope.isCollapsed = false;
 
   $.get('/data/playlists.json', function(data) {
@@ -26,8 +33,65 @@ DiskoApp.controller('playerController', function($scope, $sce) {
       //initialize the player
       //$scope.playing.changeTrack(data.content[0].content[0]);
       $scope.playing.init(data.content[0].content[0]);
+
     });
   });
+
+  $scope.sortableOptions = {
+    activate: function() {
+        console.log("activate");
+    },
+    beforeStop: function() {
+        console.log("beforeStop");
+    },
+    change: function() {
+        console.log("change");
+    },
+    create: function() {
+        console.log("create");
+    },
+    deactivate: function() {
+        console.log("deactivate");
+    },
+    out: function() {
+        console.log("out");
+    },
+    over: function() {
+        console.log("over");
+    },
+    receive: function() {
+        console.log("receive");
+    },
+    remove: function() {
+        console.log("remove");
+    },
+    sort: function() {
+        console.log("sort");
+    },
+    start: function() {
+        console.log("start");
+    },
+    update: function(e, ui) {
+      // console.log("update");
+      //
+      // var logEntry = tmpList.map(function(i){
+      //   return i.value;
+      // }).join(', ');
+      // $scope.sortingLog.push('Update: ' + logEntry);
+    },
+    stop: function(e, ui) {
+      console.log("stop");
+      //
+      // // this callback has the changed model
+      // var logEntry = tmpList.map(function(i){
+      //   return i.value;
+      // }).join(', ');
+      // $scope.sortingLog.push('Stop: ' + logEntry);
+
+      console.log($scope.playlist.content)
+      socket.emit('action_playlist', {room: 'playlist1', content: $scope.playlist})
+    }
+  };
 
   $scope.addNewTrack = function() {
     //toastr options -> put in another file ?

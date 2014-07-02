@@ -76,7 +76,6 @@ module.exports = (app) ->
     console.log('GET playlist ' + req.params.id + ' JSON object')
     Playlist.find {}, (err, data) ->
       if !err
-        console.log data
         res.json {result: 'OK', content: data}
       else
         res.json {result: 'error', content: null}
@@ -122,7 +121,6 @@ module.exports = (app) ->
       req.body,
       new: true,
         (err, data) ->
-          console.log data
           unless err
             res.json result: 'OK'
           else

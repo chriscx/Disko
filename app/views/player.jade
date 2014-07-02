@@ -72,21 +72,6 @@ block append content
             //-         p {{item.title}}
             //-         span.inline.right 3.10
             div
-              script.
-                  var socket = io.connect('http://localhost');
-                  $(function() {
-                    $( "#sortable" ).sortable({
-                      key: "sort",
-                      stop: function(event, ui) {
-                        console.log(ui);
-                        socket.emit('pl_change', { pl: 'table changed' });
-                      }
-                    });
-                    $( "#sortable" ).disableSelection();
-                  });
-                  socket.on('pl_change', function (data) {
-                    console.log(data);
-                  });
               table.table.table-hover
                 tr
                   //- th
@@ -96,7 +81,7 @@ block append content
                   //- th Added Date
                   //- th url
                   th Source
-                tbody(id='sortable')
+                tbody(ui-sortable="sortableOptions" ng-model='playlist.content')
                   tr(ng-repeat='item in playlist.content | orderBy:sortingOrder:reverse')
                     //- td
                     //-   button.btn(type='button')
